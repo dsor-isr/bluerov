@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+ <name>bluerov_interface</name>
+ <version>1.0.0</version>
+ <description>Package that interfaces the medusa stack with the bluerov drivers through mavlink</description>
+
+ <license>MIT</license>
+
+ <author email="marcelo.jacinto@tecnico.ulisboa.pt">Marcelo Jacinto</author>
+ <author email="andre.potes@gmail.com">André Potes</author>
+ <maintainer email="marcelo.jacinto@tecnico.ulisboa.pt">Marcelo Jacinto</maintainer>
+ <maintainer email="andre.potes@gmail.com">André Potes</maintainer>
+
+ <buildtool_depend>catkin</buildtool_depend>
+ <depend>rospy</depend>
+ <depend>medusa_msgs</depend>
+ <depend>sensor_msgs</depend>
+ <depend>dsor_msgs</depend>
+ <depend>std_msgs</depend>
+
+</package>

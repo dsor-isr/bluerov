@@ -1,0 +1,83 @@
+# Node that receives data from MQTT and sends to a ros topic
+mqtt_bridge:
+  ip: "mqtt.dsor.isr.tecnico.ulisboa.pt"
+  port: 1883
+  keepalive: 30 #seconds
+  scale_factor: # input interval from mqtt [0, 100] (percentage?)
+    surge: 0.012
+    sway: 0.012
+    heave: 0.012
+    yaw_rate: 2.0
+
+# Node that receives that from network stabilizer and sends to the medusa interface
+vehicle_safety:
+  # Bound the speed to send to the vehicle [negative value, positive value]
+  limit_surge: [-1.0, 1.0] 
+  limit_sway: [-1.0, 1.0]
+  limit_heave: [-0.5, 0.5] 
+
+  # Bound the yaw-rate speed [negative_degrees/s, positive_degrees/s]
+  limit_yaw_rate: [-50.0, 50.0]
+
+  # Maximum depth and minimum altitude from the ground
+  max_depth: 100 #m
+  min_altitude: 0 #m
+
+  # Speed factor to apply when the vehicle enters safety mode (network is getting slow but not unusable yet)
+  speed_factor: 1.0
+
+  # If we want to have obstacle avoidance or not working
+  # NOTE: to actually use the obstacle avoidance 
+  # you must call the service '/activate_potential_field'
+  activate_obstacle_avoidance: false
+
+  # If we want to load the map 
+  load_premade_map: true
+  # NOTE: the node attaches the ${HOME} such that the file is located at ${HOME}/<export_location>
+  premade_map_location: sim_map.txt 
+
+  # If obstacle avoidance is active and load_premade_map is not, then, construct the map
+  # on the fly based on the configuration bellow
+  map:
+
+    # X (north), Y (easting), width (horizontal), height (vertical) 
+    # at the bottom-left corner of the map
+    bottom_x_coord: 4104727.547593734
+    bottom_y_coord: 536756.5398869041
+    width: 70.0
+    height: 50.0
+    #bottom_x_coord: 4104727.0
+    #bottom_y_coord: 536756.0
+    #width: 70.0
+    #height: 53.0
+    cell_size: 1.0 # m
+    # define the obstacles on the map, based on the following types and repulsive forces, with the specific parameters:
+    #   type: rectangle (bottom left x and y (UTM northing and easting - NED convention), width (horizontal axis) and height(vertical axis))
+    #   type: circle (TODO)
+    #   type: polygon (TODO like "paint")
+    obstacles:
+      #obst1: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4290855.0, 491850.70], 'width': 10.0, 'height': 50.0}
+      #obst2: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4290895.0, 491900.70], 'width': 30.0, 'height': 20.0}
+      #obst3: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4291105.0, 492100.70], 'width': 50.0, 'height': 50.0}
+      obst_boat: {'type': 'rectangle', 'force_gain': 0.05, 'bottom_xy': [4104748.547593734, 536786.5398869041], 'width': 10.0, 'height': 10.0}
+      south_wall: {'type': 'rectangle', 'force_gain': 0.2, 'bottom_xy': [4104727.547593734, 536756.5398869041], 'width': 70.0, 'height': 1.0}
+      east_wall: {'type': 'rectangle', 'force_gain': 0.2, 'bottom_xy': [4104727.547593734, 536824.5398869041], 'width': 1.0, 'height': 50.0}
+      west_wall: {'type': 'rectangle', 'force_gain': 0.2, 'bottom_xy': [4104727.547593734, 536756.5398869041], 'width': 1.0, 'height': 50.0}
+      north_wall: {'type': 'rectangle', 'force_gain': 0.2, 'bottom_xy': [4104775.547593734, 536756.5398869041], 'width': 70.0, 'height': 1.0}
+    # Location where to export the final gradient map
+    export_map: true
+    # NOTE: the node attaches the ${HOME} such that the file is saved to ${HOME}/<export_location>
+    export_location: sim_map.txt 
+
+network_stabilizer:
+  timers:
+    t1: 1000.0 #0.3
+    t2: 1000.0 #2.0
+    t3: 1000.0 #10.0
+
+# Node that sends the command to the medusa inner-loops and waypoint controller
+medusa_interface:
+  # Waypoint to go to
+  wp_pos_ref:
+    pos_x: 0.0
+    pos_y: 0.0

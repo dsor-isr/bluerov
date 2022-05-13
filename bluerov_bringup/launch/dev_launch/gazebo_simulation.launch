@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Parameters and Arguments -->
+    <arg name="name"            />                              <!-- Name of the vehicle being launched -->   
+    <arg name="config_package"  />                              <!-- Name of the package where the configuration files are stored -->
+    <arg name="folder"                 default="simulation" />  <!-- Name of the folder for the configuration files -->     
+    <arg name="vehicle_configuration"  default="heavy" />       <!-- 6 or 8 thruster configuration (supports: 'regular' and 'heavy') -->
+
+    <arg name="namepsace"              default="true" />
+
+    <arg name="dollar" value="$" />
+    <arg name="vehicle_package"       value="bluerov_$(arg vehicle_configuration)" />
+    <arg name="vehicle_package_path"  value="(find $(arg vehicle_package)" />
+    
+    <!--Robot Spawn Location (in ENU inertial frame with orientation of ENU body frame) -->
+	<arg name="x"           default="0.0"/>
+	<arg name="y"           default="0.0"/>
+	<arg name="z"           default="0.0"/>
+	<arg name="roll"        default="0.0"/>
+	<arg name="pitch"       default="0.0"/>
+	<arg name="yaw"         default="0.0"/>
+    
+    <!-- Launch a Vehicle -->
+    <include file="$(arg dollar)$(arg vehicle_package_path))/launch/upload.launch">
+        <arg name="x"           value="$(arg x)"/>
+        <arg name="y"           value="$(arg y)"/>
+        <arg name="z"           value="$(arg z)"/>
+        <arg name="roll"        value="$(arg roll)"/>
+        <arg name="pitch"       value="$(arg pitch)"/>
+        <arg name="yaw"         value="$(arg yaw)"/>
+    </include>
+</launch>

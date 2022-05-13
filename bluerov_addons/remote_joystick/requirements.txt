@@ -1,0 +1,4 @@
+joystick_controller==1.2.2
+paho_mqtt==1.6.1
+pygame==2.1.0
+pyyaml==6.0

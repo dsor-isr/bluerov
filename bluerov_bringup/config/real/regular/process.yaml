@@ -1,0 +1,58 @@
+processes:
+  - name: 'bags'
+    launch_on_startup: false
+    delay_before_start: 0.0
+    cmd: 'roslaunch medusa_bringup bags.launch'
+    args:
+          - prefix:= sim
+          - onebag:= true
+    dependencies:
+          []
+  - name: 'mqtt'
+    launch_on_startup: false
+    delay_before_start: 0.0
+    cmd: 'roslaunch blueroses_bringup mqtt.launch'
+    args:
+         - mqtt_bridge:= true
+         - network_stabilizer:= true
+         - vehicle_safety:= true
+         - medusa_interface:= true
+    dependencies:
+          []
+  - name: 'tfs'
+    launch_on_startup: false
+    delay_before_start: 0.0
+    cmd: 'roslaunch medusa_bringup simulation_tfs.launch'
+    args:
+         - broadcast_tf:= true
+    dependencies:
+         []
+  - name: 'medusa_stack'
+    launch_on_startup: false
+    delay_before_start: 0.0
+    cmd: 'roslaunch blueroses_bringup medusa_stack.launch'
+    args:
+         - console_server:= true
+         - console_path_parser:= true
+         - filter:= true
+         - gnss2utm:= true
+         - static_thruster_allocation:= true
+         - inner_loops_pid:= true
+         - open_loop_control:= false
+         - waypoint:= true
+         - path_following:= true
+         - dsor_paths:= true
+         - auvstate2mstate:= true
+         - vehicle_stabilizer:= true
+    dependencies:
+         []
+  - name: 'bluerov_interface'
+    launch_on_startup: true
+    delay_before_start: 0.0
+    cmd: 'roslaunch blueroses_bringup bluerov_interface.launch'
+    args:
+         - bluerov_interface:= true
+         - dvl_interface:= true
+         - ahrs_interface:= true
+    dependencies:
+         []

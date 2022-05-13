@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}]: ${node}: ${message}"/>
+
+    <!-- Parameters and Arguments -->
+    <arg name="name"            />                              <!-- Name of the vehicle being launched -->   
+    <arg name="config_package_path"  />                         <!-- Name of the package where the configuration files are stored -->
+    <arg name="folder"                 default="simulation" />  <!-- Name of the folder for the configuration files --> 
+    <arg name="vehicle_configuration"  default="heavy" />       <!-- 6 or 8 thruster configuration (supports: 'regular' and 'heavy') -->
+    <arg name="namespace"              default="false" />
+    
+    <arg name="bluerov_interface"      default="false" />  
+    <arg name="dvl_interface"          default="false" />
+    <arg name="ahrs_interface"         default="false" />
+
+    <arg name="dollar" value="$" />
+    <rosparam command="load" file="$(arg dollar)$(arg config_package_path))/config/$(arg folder)/$(arg vehicle_configuration)/interface.yaml" />
+
+    <!-- Drivers interface for mavlink - ROS communication taylored to bluerov -->
+    <group if="$(arg bluerov_interface)">
+        <node pkg="bluerov_interface" type="BluerovInterfaceNode.py" name="bluerov_interface" output="screen" respawn="true" />
+    </group>
+
+    <!-- Drivers for the dvl -->
+    <!--<group if="$(arg dvl_interface)">
+        <node pkg="a50_dvl" type="a50_dvl_node" name="dvl_interface" respawn="true" output="screen" />
+    </group>-->
+    <group if="$(arg dvl_interface)">
+        <include file="$(find waterlinked_a50_ros_driver)/launch/launch_dvl.launch" />
+    </group>
+
+    <!-- Socat for data comming from the AHRS -->
+    <group if="$(arg ahrs_interface)">
+        <node pkg="vn100_imu" type="vn100_imu_node" name="ahrs_interface" respawn="true" output="screen" />
+    </group>
+
+</launch>

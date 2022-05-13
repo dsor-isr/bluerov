@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+  <name>bluerov_drivers</name>
+  <version>1.0.0</version>
+  <description>
+	The bluerov_drivers metapackage that installs all the Medusa Drivers
+	
+	Institute for Systems and Robotics
+	Instituto Superior Tecnico
+	Lisbon, Portugal
+  </description>
+
+  <author email="jquintas@gmail.com">Joao Quintas</author>
+  <author email="marcelo.jacinto@tecnico.ulisboa.pt">Marcelo Jacinto</author>
+
+  <maintainer email="marcelo.jacinto@tecnico.ulisboa.pt">Marcelo Jacinto</maintainer>
+  <maintainer email="david.souto@tecnico.ulisboa.pt">David Souto</maintainer>
+  <maintainer email="andre.potes@tecnico.ulisboa.pt">Andre Potes</maintainer>
+  <maintainer email="jquintas@gmail.com">Joao Quintas</maintainer>
+  <maintainer email="jcruz.pedro.cruz@tecnico.ulisboa.pt">Joao Cruz</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">http://dsor.isr.tecnico.ulisboa.pt</url>
+  <url type="repository">https://github.com/dsor-isr/medusa_drivers</url>
+  
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>a50_dvl</run_depend>
+  <run_depend>vn100_imu</run_depend>
+  <run_depend>bluerov_interface</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

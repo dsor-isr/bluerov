@@ -1,0 +1,25 @@
+node_frequency: 10 #Hz
+
+remote_joystick:
+
+  topics:
+    # data to be published by the controller to MQTT
+    publishers:
+      # Heading-rate
+      yaw_rate: "/bluerov/ref/yaw_rate"
+      
+      # Surge
+      surge: "/bluerov/ref/surge"
+      
+      # Sway
+      sway: "/bluerov/ref/sway"
+      
+      # Heave
+      heave: "/bluerov/ref/heave"
+
+      # Gimbal
+      gimbal: "/bluerov/gimbal_angle"
+
+    services:
+      # Lights
+      lights: "/bluerov/set_lights"

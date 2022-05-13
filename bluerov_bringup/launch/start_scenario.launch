@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Flags to select GUI, frame of reference, vehicle and world-->
+    <arg name="gui"            default="true"/>
+    <arg name="use_sim_time"   default="false"/>
+    <arg name="world_frame"    default="world"/>
+
+    <!-- Choose the world to launch (default is expo_lisbon)-->
+    <arg name="folder" default="algarve_worlds" />
+    <arg name="world"  default="ocean_revival_park" />
+
+    <!-- Enable web video server to stream cameras -->
+    <arg name="web_video_server"   default="false"/>
+    <arg name="web_video_port"   default="8080"/>
+
+    <!-- Select the gazebo world -->
+    <include file="$(find medusa_worlds)/launch/$(arg folder)/$(arg world).launch">
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    </include>
+
+    <node name="web_video_server" pkg="web_video_server" type="web_video_server" if="$(arg web_video_server)">
+        <param name="port" value="$(arg web_video_port)" />
+        <param name="server_threads" value="4" />
+        <param name="ros_threads" value="8" />
+    </node>
+    
+</launch>

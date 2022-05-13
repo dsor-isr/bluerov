@@ -1,0 +1,11 @@
+relay_server:
+  # Video feed options
+  stream_type: "HTTP" # Supports HTTP or UDP
+  stream_port: 8080 # Port is not used when in HTTP mode
+  stream_address: "lenovo.dsor.isr.tecnico.ulisboa.pt"
+
+  # HTTP Broadcast options
+  broadcast_port: 8080
+  broadcast_address: "/"
+  number_threads: 10
+  image_quality: 100   # Ints from 0<->100 %

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="joystick"    default="gamesir"/>   <!-- Name of the joystick being used -->
+    <arg name="mode"        default="usb"/> <!-- Configurations for both usb and bluetooth -->
+
+    <!-- Load the configuration parameters for the topics-->
+    <rosparam command="load" file="$(find remote_joystick)/config_ros/topics_ros/ros.yaml" />
+
+    <!-- Define the logging format -->
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}]: ${node}: ${message}"/>
+
+    <!-- Launch the actual simulation node -->
+    <node pkg="remote_joystick" type="RemoteControllerROSNode.py" name="remote_joystick" respawn="false" output="screen">
+	<rosparam command="load" file="$(find remote_joystick)/config_ros/$(arg joystick)/$(arg mode).yaml" />
+    </node>
+
+</launch>

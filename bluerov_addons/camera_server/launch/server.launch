@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Load the configuration file for a UDP->HTTP server -->
+    <rosparam command="load" file="$(find camera_server)/config/server.yaml" />
+
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}]: ${node}: ${message}"/>
+    <node pkg="camera_server" type="camera_server" name="camera_server" output="screen" respawn="true" />
+
+</launch>

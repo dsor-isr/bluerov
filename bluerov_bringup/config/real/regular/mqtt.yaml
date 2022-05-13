@@ -1,0 +1,55 @@
+# Node that receives data from MQTT and sends to a ros topic
+mqtt_bridge:
+  ip: "localhost"
+  port: 1883
+  keepalive: 30 #seconds
+
+# Node that receives that from network stabilizer and sends to the medusa interface
+vehicle_safety:
+  # Bound the speed to send to the vehicle [negative value, positive value]
+  limit_surge: [-1.0, 1.0] 
+  limit_sway: [-1.0, 1.0]
+  limit_heave: [-0.5, 0.5] 
+
+  # Bound the yaw-rate speed [negative_degrees/s, positive_degrees/s]
+  limit_yaw_rate: [-10.0, 10.0]
+
+  # Maximum depth and minimum altitude from the ground
+  max_depth: 30 #m
+  min_altitude: 5 #m
+
+  # Speed factor to apply when the vehicle enters safety mode (network is getting slow but not unusable yet)
+  speed_factor: 0.5
+
+  # If we want to have obstacle avoidance or not working
+  activate_obstacle_avoidance: true
+  
+  map:
+    # X (north), Y (easting), width (horizontal), height (vertical) 
+    # at the bottom-left corner of the map
+    bottom_x_coord: 4290855.00
+    bottom_y_coord: 491850.70
+    width: 500.0
+    height: 500.0
+    cell_size: 1.0 # m
+    # define the obstacles on the map, based on the following types and repulsive forces, with the specific parameters:
+    #   type: rectangle (bottom left x and y (UTM northing and easting - NED convention), width (horizontal axis) and height(vertical axis))
+    #   type: circle (TODO)
+    #   type: polygon (TODO like "paint")
+    obstacles:
+      obst1: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4290855.0, 491850.70], 'width': 10.0, 'height': 50.0}
+      obst2: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4290895.0, 491900.70], 'width': 30.0, 'height': 20.0}
+      obst3: {'type': 'rectangle', 'force_gain': 1.0, 'bottom_xy': [4291105.0, 492100.70], 'width': 50.0, 'height': 50.0}
+
+network_stabilizer:
+  timers:
+    t1: 0.3
+    t2: 2.0
+    t3: 10.0
+
+# Node that sends the command to the medusa inner-loops and waypoint controller
+medusa_interface:
+  # Waypoint to go to
+  wp_pos_ref:
+    x: 0.0
+    y: 0.0
