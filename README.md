@@ -41,7 +41,7 @@ source ${MEDUSA_SCRIPTS}/medusa_easy_alias/medusa_permanent_alias/alias.sh
 catkin build
 ```
 
-## Simulate the a vehicle and scenario w/ Gazebo
+## Simulate the vehicle and scenario w/ Gazebo
 
 To start, we want to first create and simulate the scenario for the vehicle, via the following command
 
