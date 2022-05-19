@@ -2,7 +2,7 @@ processes:
   - name: 'gazebo_simulation'
     launch_on_startup: true
     delay_before_start: 0.0
-    cmd: 'roslaunch blueroses_bringup gazebo_simulation.launch'
+    cmd: 'roslaunch bluerov_bringup gazebo_simulation.launch'
     args:
           - x:= 0.0
           - y:= 40.0
@@ -21,17 +21,6 @@ processes:
           - onebag:= true
     dependencies:
           []
-  - name: 'mqtt'
-    launch_on_startup: true
-    delay_before_start: 0.0
-    cmd: 'roslaunch blueroses_bringup mqtt.launch'
-    args:
-         - mqtt_bridge:= true
-         - network_stabilizer:= true
-         - vehicle_safety:= true
-         - medusa_interface:= true
-    dependencies:
-          []
   - name: 'tfs'
     launch_on_startup: false
     delay_before_start: 0.0
@@ -43,7 +32,7 @@ processes:
   - name: 'medusa_stack'
     launch_on_startup: true
     delay_before_start: 0.0
-    cmd: 'roslaunch blueroses_bringup medusa_stack.launch'
+    cmd: 'roslaunch bluerov_bringup medusa_stack.launch'
     args:
          - console_server:= true
          - console_path_parser:= true

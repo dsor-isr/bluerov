@@ -3,8 +3,8 @@
 
     <!-- Parameters and Arguments -->
     <arg name="name"                   default="bluerov" />            <!-- Name of the vehicle being launched -->   
-    <arg name="config_package"         default="blueroses_bringup"/>   <!-- Name of the package where the configuration files are stored -->
-    <arg name="folder"                 default="real" />               <!-- Name of the folder for the configuration files -->     
+    <arg name="config_package"         default="bluerov_bringup"/>   <!-- Name of the package where the configuration files are stored -->
+    <arg name="folder"                 default="simulation" />               <!-- Name of the folder for the configuration files -->     
     <arg name="vehicle_configuration"  default="heavy" />              <!-- 6 or 8 thruster configuration (supports: 'regular' and 'heavy') -->
 
     <arg name="dollar" value="$" />
