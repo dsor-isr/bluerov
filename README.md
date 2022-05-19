@@ -72,14 +72,6 @@ the following ALIAS to your bashrc and run the command before starting ROS.
 alias vn100_socat="sudo socat pty,link=/dev/ttyVUSB1,raw,group-late=dialout,mode=660 tcp:192.168.2.2:8888"
 ```
 
-### Commands that start automatically in raspberry pi
-Add the 'socat_ahrs_bluerov.service' command in blueroses_addons to the raspberry pi's systemd.
-```
-sudo cp socat_ahrs_bluerov.service /etc/systemd/system
-sudo systemctl enable socat_ahrs_bluerov.service
-sudo systemctl start socat_ahrs_bluerov.service
-```
-
 ### Accessing the video stream made via UDP
 To access the video stream that is emitted by either the real or simulated BlueRov, please run the following line:
 ```
@@ -90,18 +82,6 @@ To access the video stream with OpenCV, refer to this example git repository onl
 
 ## Note:
 At the moment, the gibmal of the bluerov vehicle is not controllable. 
-
-### Install ROS on Raspberry pi running Raspian Buster OS
-Check the online [install guide](https://varhowto.com/install-ros-noetic-raspberry-pi-4/).
-
-### Bluerov Wifi
-Disabling wifi in the real bluerov vehicle
-
-```
-/boot/config.txt
-```
-
-Added a line a the end to disable wifi - to re-enable, comment it
 
 ## Help and Support
 
