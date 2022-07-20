@@ -5,3 +5,6 @@
 	path = medusa_gazebo
 	url = ../medusa_gazebo.git
 
+[submodule "bluerov_drivers"]
+	path = bluerov_drivers
+	url = git@github.com:dsor-isr/bluerov_drivers.git
