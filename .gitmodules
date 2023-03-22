@@ -1,3 +1,6 @@
 [submodule "bluerov_drivers"]
 	path = bluerov_drivers
 	url = git@github.com:dsor-isr/bluerov_drivers.git
+[submodule "farol"]
+	path = farol
+	url = git@github.com:dsor-isr/farol.git
