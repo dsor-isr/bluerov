@@ -1,9 +1,9 @@
-[submodule "medusa_base"]
-	path = medusa_base
-	url = ../medusa_base.git
-[submodule "medusa_gazebo"]
-	path = medusa_gazebo
-	url = ../medusa_gazebo.git
+[submodule "farol"]
+	path = farol
+	url = ../farol.git
+[submodule "farol_gazebo"]
+	path = farol_gazebo
+	url = ../farol_gazebo.git
 
 [submodule "bluerov_drivers"]
 	path = bluerov_drivers
