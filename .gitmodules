@@ -1,10 +1,3 @@
-[submodule "farol"]
-	path = farol
-	url = ../farol.git
-[submodule "farol_gazebo"]
-	path = farol_gazebo
-	url = ../farol_gazebo.git
-
 [submodule "bluerov_drivers"]
 	path = bluerov_drivers
 	url = git@github.com:dsor-isr/bluerov_drivers.git
