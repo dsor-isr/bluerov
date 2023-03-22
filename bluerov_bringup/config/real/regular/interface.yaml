@@ -1,4 +1,0 @@
-bluerov_interface:
-  udp_mavlink: 'udpin:192.168.2.1:14550'
-  num_thrusters: 8
-  depth_atm_pressure: 10.1452685894133 # 1.028*10.19977334

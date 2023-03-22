@@ -1,0 +1,184 @@
+# created on 2017/01/05 by Jorge Ribeiro
+#
+# 1 - surface
+# 2 - hrov
+# 3 - dock
+#
+# latch = 0 publishes for ever
+#        >0 publishes for n number of slots even if nothing is received
+#
+# Check the following document for the acoustic description
+# https://docs.google.com/spreadsheets/d/1o_p9rl8eRqVtl4L3G4qtig7R__WBa42d7-IvHyCSmr0/edit#gid=0
+data_serializer:
+  acoustic_data_channels:
+    # - from: [1]
+    #   to: [3]
+    #   msg: "farol_msgs/stateAcomms"
+    #   topic_in: "/mred0/nav/filter/state_acomms"
+    #   topic_out: "/mvector0/acomms/nav/filter/gnss"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "global_position.latitude"
+    #       min: -90
+    #       max: 90
+    #       bits: 25
+    #     - field_name: "global_position.longitude"
+    #       min: -180
+    #       max: 180
+    #       bits: 26
+    #     - field_name: "source_id"
+    #       min: 0
+    #       max: 5
+    #       bits: 3
+    # - from: [3]
+    #   to: [1]
+    #   msg: "farol_msgs/mState"
+    #   topic_in: "/mvector0/State"
+    #   topic_out: "/mred0/State_acomms"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "X"
+    #       min: 491600
+    #       max: 492100
+    #       bits: 16
+    #     - field_name: "Y"
+    #       min: 4290500
+    #       max: 4290900
+    #       bits: 16
+    #     - field_name: "Depth"
+    #       min: 0
+    #       max: 5
+    #       bits: 6
+    #     - field_name: "Yaw"
+    #       min: 0
+    #       max: 360
+    #       bits: 9
+    # - from: [1]
+    #   to: [3]
+    #   msg: "std_msgs/Int8"
+    #   topic_in: "/mred0/watchdog/safety_abort"
+    #   topic_out: "/mvector0/acomms/safety_abort"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "data"
+    #       min: 0
+    #       max: 1
+    #       bits: 10
+    # - from: [1]
+    #   to: [3]
+    #   msg: "farol_msgs/CPFGamma"
+    #   topic_in: "/mred0/Internal/Gamma"
+    #   topic_out: "/mvector0/External/Gamma"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "gamma"
+    #       min: 0
+    #       max: 3
+    #       bits: 20
+    #     - field_name: "ID"
+    #       min: 0
+    #       max: 2
+    #       bits: 2
+    #     - field_name: "vd"
+    #       min: -1.0
+    #       max: 1.0
+    #       bits: 20
+    # - from: [3]
+    #   to: [1]
+    #   msg: "farol_msgs/CPFGamma"
+    #   topic_in: "/mvector0/Internal/Gamma"
+    #   topic_out: "/mred0/External/Gamma"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "gamma"
+    #       min: 0
+    #       max: 3
+    #       bits: 20
+    #     - field_name: "ID"
+    #       min: 0
+    #       max: 2
+    #       bits: 2
+    #     - field_name: "vd"
+    #       min: -1.0
+    #       max: 1.0
+    #       bits: 20
+    # - from: [2]
+    #   to: [3]
+    #   msg: "farol_msgs/stateAcomms"
+    #   topic_in: "/mblack0/nav/filter/state_acomms"
+    #   topic_out: "/mvector0/acomms/nav/filter/gnss"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "global_position.latitude"
+    #       min: -90
+    #       max: 90
+    #       bits: 25
+    #     - field_name: "global_position.longitude"
+    #       min: -180
+    #       max: 180
+    #       bits: 26
+    #     - field_name: "source_id"
+    #       min: 0
+    #       max: 5
+    #       bits: 3
+    # - from: [3]
+    #   to: [2]
+    #   msg: "farol_msgs/mState"
+    #   topic_in: "/mvector0/State"
+    #   topic_out: "/mblack0/State_acomms"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "X"
+    #       min: 491600
+    #       max: 492100
+    #       bits: 16
+    #     - field_name: "Y"
+    #       min: 4290500
+    #       max: 4290900
+    #       bits: 16
+    #     - field_name: "Depth"
+    #       min: 0
+    #       max: 5
+    #       bits: 6
+    #     - field_name: "Yaw"
+    #       min: 0
+    #       max: 360
+    #       bits: 9
+    # - from: [2]
+    #   to: [3]
+    #   msg: "farol_msgs/CPFGamma"
+    #   topic_in: "/mblack0/Internal/Gamma"
+    #   topic_out: "/mvector0/External/Gamma"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "gamma"
+    #       min: 0
+    #       max: 3
+    #       bits: 20
+    #     - field_name: "ID"
+    #       min: 0
+    #       max: 2
+    #       bits: 2
+    #     - field_name: "vd"
+    #       min: -1.0
+    #       max: 1.0
+    #       bits: 20
+    # - from: [3]
+    #   to: [2]
+    #   msg: "farol_msgs/CPFGamma"
+    #   topic_in: "/mvector0/Internal/Gamma"
+    #   topic_out: "/mblack0/External/Gamma"
+    #   latch: 5
+    #   fields:
+    #     - field_name: "gamma"
+    #       min: 0
+    #       max: 3
+    #       bits: 20
+    #     - field_name: "ID"
+    #       min: 0
+    #       max: 2
+    #       bits: 2
+    #     - field_name: "vd"
+    #       min: -1.0
+    #       max: 1.0
+    #       bits: 20

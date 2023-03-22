@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+
+    <env name="ROSCONSOLE_FORMAT" value="[${severity}] [${time}]: ${node}: ${message}"/>
+    
+    <!-- Parameters and Arguments -->
+    <arg name="name"                                  />    <!-- Name of the vehicle being launched -->   
+    <arg name="config_package_path"                   />    <!-- Name of the package where the configuration files are stored -->
+    <arg name="folder"             default="vehicles" />    <!-- Name of the folder for the configuration files -->     
+    <arg name="namespace"          default="false"    />
+    <arg name="vehicle_id"         default="0"        />
+
+    <arg name="broadcast_tf"       default="false"    />
+
+    <arg name="pi2" value="1.57079632679" />
+    <arg name="pi" 	value="3.14159265359" />
+
+    <group if="$(arg broadcast_tf)">
+        <group ns="tfs/broadcaster">
+            
+            <!-- HEAVY TFS -->
+            <group if="$(eval name=='bluerov_heavy0')">
+                <node pkg="tf2_ros" type="static_transform_publisher" name="gnss" args="-0.2735 0 -0.39 0 0 0 base_link gnss"/>
+                <!-- Pointing Down - Surface Vehicle -->
+                <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="usbl" args="0 0 0 -0.7854 0 0 base_link usbl"/>-->
+                <!-- Pointing Up - Underwater Vehicle -->
+                <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="usbl" args="0 0 0 0.7854 0 $(arg pi) base_link usbl"/> -->
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dvlb" args="0.485 0 0.39 0.052359878 0 0 base_link dvl_bt" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dvlw" args="0.485 0 0.39 0.052359878 0 0 base_link dvl_wt" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="ahrs" args="0 0 0 0 0 0 1 base_link ahrs" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="imun" args="0 0 0 0 0 0 1 base_link imu_noisy" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dept" args="0 0 0 0 0 0 1 base_link depth" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="alti" args="0 0 0 0 0 0 base_link altimeter" />
+            </group>
+
+            <!-- REGULAR TFS -->
+            <group if="$(eval name=='bluerov_regular0')">
+                <node pkg="tf2_ros" type="static_transform_publisher" name="gnss" args="-0.2735 0 -0.39 0 0 0 base_link gnss"/>
+                <!-- Pointing Down - Surface Vehicle -->
+                <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="usbl" args="0 0 0 -0.7854 0 0 base_link usbl"/> -->
+                <!-- Pointing Up - Underwater Vehicle -->
+                <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="usbl" args="0 0 0 0.7854 0 $(arg pi) base_link usbl"/> -->
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dvlb" args="0.485 0 0.39 0.052359878 0 0 base_link dvl_bt" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dvlw" args="0.485 0 0.39 0.052359878 0 0 base_link dvl_wt" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="ahrs" args="0 0 0 0 0 0 1 base_link ahrs" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="imun" args="0 0 0 0 0 0 1 base_link imu_noisy" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="dept" args="0 0 0 0 0 0 1 base_link depth" />
+                <node pkg="tf2_ros" type="static_transform_publisher" name="alti" args="0 0 0 0 $(arg pi2) 0 base_link altimeter" />
+            </group>
+        </group>
+    </group>
+</launch>

@@ -1,0 +1,91 @@
+## --------------------------- ## 
+#   Overide configurations      #
+## --------------------------- ##
+
+
+## --------------------------- ## 
+#   Network Ports               #
+## --------------------------- ##
+addons/console_server:
+    PORT: 7080
+
+cooperative/cpf_wifi_server:
+    broadcast_port: 2808
+
+cooperative/cpf_wifi_client:
+    broadcast_port: 2808
+
+
+## --------------------------- ## 
+#   Additional configurations   #
+## --------------------------- ##
+
+## --------------------------- ## 
+#   bluerov_addons              #
+## --------------------------- ## 
+# bluerov_addons:
+#   camera_server:
+#     # Video feed options
+#     stream_type: "UDP" # Supports HTTP or UDP
+#     stream_port: 5600
+#     stream_address: "192.168.2.1"
+
+#     # HTTP Broadcast options
+#     broadcast_port: 8080
+#     broadcast_address: "/"
+#     number_threads: 2
+#     image_quality: 30   # Ints from 0<->100 %
+
+
+## --------------------------- ## 
+#   bluerov_drivers             #
+## --------------------------- ## 
+
+bluerov_interface:
+  node_frequency: 50.0 # Hz
+  topics:
+    subscribers:
+      thrusters: "/#vehicle#/thrusters/rpm_command"
+      gimbal: "/#vehicle#/gimbal_angle"
+      thrusters_safety: "/#vehicle#/thrusters_safety"
+    publishers:
+      imu: "/#vehicle#/measurement/orientation"
+      altimeter: "/#vehicle#/measurement/position"
+      depth: "/#vehicle#/measurement/position"
+      gps: "/#vehicle#/sensors/gnss"
+      # Topics for debugging the direct sensor output
+      data:
+        altimeter: "/#vehicle#/drivers/altimeter/data"
+        depth: "/#vehicle#/drivers/depth/data"
+        pressure: "/#vehicle#/drivers/pressure/data"
+        imu: "/#vehicle#/drivers/ahrs/data"
+        voltage: "/#vehicle#/drivers/battery/voltage"
+        current: "/#vehicle#/drivers/battery/current"
+
+    services:
+      lights: "/#vehicle#/set_lights"
+
+dvl_interface:
+  node_frequency: 10.0 # Hz
+  topics:
+    subscribers: 
+      dvl_enable: "/#vehicle#/drivers/dvl/enable"
+    publishers:
+      dvl_json_data: "/#vehicle#/drivers/dvl/json_data"
+      dvl_data: "/#vehicle#/drivers/dvl/data"
+      velocity: "/#vehicle#/measurement/velocity"
+
+ahrs_interface:
+  node_frequency: 10.0 #Hz
+  topics:
+    subscribers:
+        conf: "/#vehicle#/conf"
+        tare: "/#vehicle#/tare"
+    publishers:
+        meas_filter: "/#vehicle#/measurement/orientation"
+        data: "/#vehicle#/data"
+        raw: "/#vehicle#/raw"
+        mag: "/#vehicle#/imu_pp"
+        diagnostics: "/#vehicle#/diagnostics"
+
+

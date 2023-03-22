@@ -1,3 +1,6 @@
+###########
+# BlueROV #
+###########
 bluerov_interface:
   udp_mavlink: 'udpin:192.168.2.1:14550'
   num_thrusters: 8
@@ -7,10 +10,16 @@ bluerov_interface:
   battery_offset: 1.16 # V
   battery_gain: 1.0
 
+#######
+# DVL #
+#######
 dvl_interface:
   ip: "192.168.2.95"
   port: 16171
 
+########
+# AHRS #
+########
 ahrs_interface:
   port: "/dev/ttyVUSB1"
   baudrate: 115200
