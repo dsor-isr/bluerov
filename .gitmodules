@@ -4,3 +4,6 @@
 [submodule "farol"]
 	path = farol
 	url = git@github.com:dsor-isr/farol.git
+[submodule "medusa_addons"]
+	path = medusa_addons
+	url = git@github.com:dsor-isr/medusa_addons.git
