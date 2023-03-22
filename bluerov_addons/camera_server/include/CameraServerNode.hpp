@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <medusa_gimmicks_library/MedusaGimmicks.h>
+#include <farol_gimmicks_library/FarolGimmicks.h>
 
 class CameraServerNode {
 

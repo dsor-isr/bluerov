@@ -12,6 +12,6 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
-  <depend>medusa_gimmicks_library</depend>
+  <depend>farol_gimmicks_library</depend>
 
 </package>

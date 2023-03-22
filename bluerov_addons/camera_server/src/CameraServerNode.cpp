@@ -20,17 +20,17 @@ CameraServerNode::~CameraServerNode() {}
 void CameraServerNode::initializeParameters() {
 
     /* Define the parameters that define where to get the video feed from (and if it comes from UDP or already in HTTP) */
-    this->stream_type_ = MedusaGimmicks::getParameters<std::string>(this->nh_p_, "stream_type", "UDP");
-    this->stream_port_ = MedusaGimmicks::getParameters<int>(this->nh_p_, "stream_port", 5600);
-    this->stream_addresss_ = MedusaGimmicks::getParameters<std::string>(this->nh_p_, "stream_address", "192.168.2.1");
+    this->stream_type_ = FarolGimmicks::getParameters<std::string>(this->nh_p_, "stream_type", "UDP");
+    this->stream_port_ = FarolGimmicks::getParameters<int>(this->nh_p_, "stream_port", 5600);
+    this->stream_addresss_ = FarolGimmicks::getParameters<std::string>(this->nh_p_, "stream_address", "192.168.2.1");
 
     /* Define the HTTP broadcasting parameters and number of threads */
-    this->broadcast_http_port_ = MedusaGimmicks::getParameters<int>(this->nh_p_, "broadcast_port", 8080);
-    this->broadcast_http_address_ = MedusaGimmicks::getParameters<std::string>(this->nh_p_, "broadcast_address", "/");
-    this->broadcast_number_threads_ = MedusaGimmicks::getParameters<int>(this->nh_p_, "number_threads", 2);
+    this->broadcast_http_port_ = FarolGimmicks::getParameters<int>(this->nh_p_, "broadcast_port", 8080);
+    this->broadcast_http_address_ = FarolGimmicks::getParameters<std::string>(this->nh_p_, "broadcast_address", "/");
+    this->broadcast_number_threads_ = FarolGimmicks::getParameters<int>(this->nh_p_, "number_threads", 2);
 
     /* Define the level of compression to apply to the image */
-    this->image_quality_ = MedusaGimmicks::getParameters<int>(this->nh_p_, "image_quality", 30);
+    this->image_quality_ = FarolGimmicks::getParameters<int>(this->nh_p_, "image_quality", 30);
 }
 
 /* Method that will be running the server until node shutdown */

@@ -7,7 +7,7 @@ add_subdirectory(nadjieb_mjpeg_streamer)
 # ROS compilation options
 find_package(catkin REQUIRED COMPONENTS)
 find_package(OpenCV REQUIRED)
-find_package(catkin REQUIRED COMPONENTS roscpp medusa_gimmicks_library)
+find_package(catkin REQUIRED COMPONENTS roscpp farol_gimmicks_library)
 
 
 add_compile_options(-std=c++17 -Wall -O3)
@@ -15,7 +15,7 @@ add_compile_options(-std=c++17 -Wall -O3)
 catkin_package(
   CATKIN_DEPENDS 
   roscpp
-  medusa_gimmicks_library
+  farol_gimmicks_library
 )
 
 include_directories(
