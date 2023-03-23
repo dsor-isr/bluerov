@@ -21,12 +21,12 @@ processes:
       cmd: 'roslaunch bluerov_bringup drivers.launch'
       args:
             - bluerov_interface:= true
-            - dvl_interface:= true
-            - ahrs_interface:= true
+            - dvl_interface:= false
+            - ahrs_interface:= false
       dependencies:
             - load
     - name: 'bags' # Set to true to automatically save all rostopics in rosbags
-      launch_on_startup: true
+      launch_on_startup: false
       delay_before_start: 5.0
       cmd: 'roslaunch farol_bringup bags.launch'
       args:
@@ -98,7 +98,7 @@ processes:
             - inner_loops_pid:= true
             - waypoint:= true
             - path_following:= true
-            - vehicle_stabilizer:= true
+            - vehicle_stabilizer:= false
       dependencies:
             - drivers
             - navigation

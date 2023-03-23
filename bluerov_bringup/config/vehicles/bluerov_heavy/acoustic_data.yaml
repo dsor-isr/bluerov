@@ -9,8 +9,8 @@
 #
 # Check the following document for the acoustic description
 # https://docs.google.com/spreadsheets/d/1o_p9rl8eRqVtl4L3G4qtig7R__WBa42d7-IvHyCSmr0/edit#gid=0
-data_serializer:
-  acoustic_data_channels:
+#data_serializer:
+#  acoustic_data_channels:
     # - from: [1]
     #   to: [3]
     #   msg: "farol_msgs/stateAcomms"

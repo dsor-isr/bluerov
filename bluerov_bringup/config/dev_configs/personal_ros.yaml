@@ -40,52 +40,52 @@ cooperative/cpf_wifi_client:
 ## --------------------------- ## 
 #   bluerov_drivers             #
 ## --------------------------- ## 
+drivers:
+  bluerov_interface:
+    node_frequency: 50.0 # Hz
+    topics:
+      subscribers:
+        thrusters: "/#vehicle#/thrusters/rpm_command"
+        gimbal: "/#vehicle#/gimbal_angle"
+        thrusters_safety: "/#vehicle#/thrusters_safety"
+      publishers:
+        imu: "/#vehicle#/measurement/orientation"
+        altimeter: "/#vehicle#/measurement/position"
+        depth: "/#vehicle#/measurement/position"
+        gps: "/#vehicle#/sensors/gnss"
+        # Topics for debugging the direct sensor output
+        data:
+          altimeter: "/#vehicle#/drivers/altimeter/data"
+          depth: "/#vehicle#/drivers/depth/data"
+          pressure: "/#vehicle#/drivers/pressure/data"
+          imu: "/#vehicle#/drivers/ahrs/data"
+          voltage: "/#vehicle#/drivers/battery/voltage"
+          current: "/#vehicle#/drivers/battery/current"
 
-bluerov_interface:
-  node_frequency: 50.0 # Hz
-  topics:
-    subscribers:
-      thrusters: "/#vehicle#/thrusters/rpm_command"
-      gimbal: "/#vehicle#/gimbal_angle"
-      thrusters_safety: "/#vehicle#/thrusters_safety"
-    publishers:
-      imu: "/#vehicle#/measurement/orientation"
-      altimeter: "/#vehicle#/measurement/position"
-      depth: "/#vehicle#/measurement/position"
-      gps: "/#vehicle#/sensors/gnss"
-      # Topics for debugging the direct sensor output
-      data:
-        altimeter: "/#vehicle#/drivers/altimeter/data"
-        depth: "/#vehicle#/drivers/depth/data"
-        pressure: "/#vehicle#/drivers/pressure/data"
-        imu: "/#vehicle#/drivers/ahrs/data"
-        voltage: "/#vehicle#/drivers/battery/voltage"
-        current: "/#vehicle#/drivers/battery/current"
+      services:
+        lights: "/#vehicle#/set_lights"
 
-    services:
-      lights: "/#vehicle#/set_lights"
+  dvl_interface:
+    node_frequency: 10.0 # Hz
+    topics:
+      subscribers: 
+        dvl_enable: "/#vehicle#/drivers/dvl/enable"
+      publishers:
+        dvl_json_data: "/#vehicle#/drivers/dvl/json_data"
+        dvl_data: "/#vehicle#/drivers/dvl/data"
+        velocity: "/#vehicle#/measurement/velocity"
 
-dvl_interface:
-  node_frequency: 10.0 # Hz
-  topics:
-    subscribers: 
-      dvl_enable: "/#vehicle#/drivers/dvl/enable"
-    publishers:
-      dvl_json_data: "/#vehicle#/drivers/dvl/json_data"
-      dvl_data: "/#vehicle#/drivers/dvl/data"
-      velocity: "/#vehicle#/measurement/velocity"
-
-ahrs_interface:
-  node_frequency: 10.0 #Hz
-  topics:
-    subscribers:
-        conf: "/#vehicle#/conf"
-        tare: "/#vehicle#/tare"
-    publishers:
-        meas_filter: "/#vehicle#/measurement/orientation"
-        data: "/#vehicle#/data"
-        raw: "/#vehicle#/raw"
-        mag: "/#vehicle#/imu_pp"
-        diagnostics: "/#vehicle#/diagnostics"
+  ahrs_interface:
+    node_frequency: 10.0 #Hz
+    topics:
+      subscribers:
+          conf: "/#vehicle#/conf"
+          tare: "/#vehicle#/tare"
+      publishers:
+          meas_filter: "/#vehicle#/measurement/orientation"
+          data: "/#vehicle#/data"
+          raw: "/#vehicle#/raw"
+          mag: "/#vehicle#/imu_pp"
+          diagnostics: "/#vehicle#/diagnostics"
 
 
