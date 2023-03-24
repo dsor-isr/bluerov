@@ -25,12 +25,13 @@
         </group>
 
         <!-- Drivers for the dvl -->
-        <!--<group if="$(arg dvl_interface)">
-            <node pkg="a50_dvl" type="a50_dvl_node" name="dvl_interface" respawn="true" output="screen" />
-        </group>-->
         <group if="$(arg dvl_interface)">
-            <include file="$(find waterlinked_a50_ros_driver)/launch/launch_dvl.launch" />
+            <node pkg="a50_dvl" type="a50_dvl_node" name="dvl_interface" respawn="true" output="screen" />
         </group>
+        <!-- <group if="$(arg dvl_interface)"> -->
+            <!-- <include file="$(find a50_dvl)/launch/launch_dvl.launch" /> -->
+            <!-- <node pkg="a50_dvl" type="a50_dvl_node" name="A50DvlNode" respawn="true" output="screen" /> -->
+        <!-- </group> -->
 
         <!-- Socat for data comming from the AHRS -->
         <group if="$(arg ahrs_interface)">
