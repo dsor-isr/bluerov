@@ -3,7 +3,7 @@ vehicle_stabilizer:
   # By default we have configured ros.yaml for: surge, sway, heave, roll, pitch, yaw, roll_rate, pitch_rate, yaw_rate, depth, altitude
   # But more can be provided, as long as the corresponding topic name is provided in the ros.yaml
   # If you want to publish no reference, this dictionary should be left empty!
-  references: {'roll': 0.0, 'pitch': 0.0}
+  references: {'roll': 0.0, 'pitch': 0.0, 'depth': 'null'}
 
 open_loop_controller:
   gain_Fx: 10.0 # surge speed to -> Force Fx N
@@ -56,7 +56,7 @@ inner_loops_pid:
   controllers:
     roll:
       kp: 0.0075 #0.002 #100
-      #ki: 0.008 #0.0 #1.0
+      ki: 0.0 #1.0
       kd: 0.007 #0.0 #5.0
       max_err:  70.0 # deg
       min_err: -70.0 # deg  
@@ -65,7 +65,7 @@ inner_loops_pid:
       debug: true
     pitch:
       kp: 0.0075 #0.2 #0.05
-      #ki: 0.008  #0.0 #0.0 #1.0
+      ki: 0.0 #0.0 #1.0
       kd: 0.007 #0.0 #0.3 #5.0
       kff: 0.0
       #kff_d: 0.001
@@ -122,7 +122,7 @@ inner_loops_pid:
     sway:
       #lpf_fc: 0.5 # low pass filter cutoff frequency
       kp: 10.0 #10.0
-      ki: 1.0 #1.0
+      ki: 0.0 #1.0
       kff: 52.0 
       #kff: 15.0 #7.0
       #kff_d: 10.0
@@ -150,7 +150,7 @@ inner_loops_pid:
     # Depth Params
     depth:
       kp: 15.0 # 5.0
-      #ki: 0.0  # 0.2
+      ki: 0.0  # 0.2
       kd: 10.0 # 4.8
       max_err:  20.0 # m
       min_err: -20.0 # m  
@@ -161,7 +161,7 @@ inner_loops_pid:
     # Altitude Params
     altitude:
       kp: 16.0 
-      ki: 1.6
+      ki: 0.0
       kd: 60.0
       max_err:  3.0 # m
       min_err: -3.0 # m  

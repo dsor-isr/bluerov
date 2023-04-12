@@ -6,20 +6,20 @@ remote_joystick:
     # data to be published by the controller to MQTT
     publishers:
       # Heading-rate
-      yaw_rate: "/bluerov/ref/yaw_rate"
+      yaw_rate: "/bluerov_heavy0/ref/yaw_rate"
       
       # Surge
-      surge: "/bluerov/ref/surge"
+      surge: "/bluerov_heavy0/ref/surge"
       
       # Sway
-      sway: "/bluerov/ref/sway"
+      sway: "/bluerov_heavy0/ref/sway"
       
       # Heave
-      heave: "/bluerov/ref/heave"
+      heave: "/bluerov_heavy0/ref/heave"
 
       # Gimbal
-      gimbal: "/bluerov/gimbal_angle"
+      gimbal: "/bluerov_heavy0/gimbal_angle"
 
     services:
       # Lights
-      lights: "/bluerov/set_lights"
+      lights: "/bluerov_heavy0/set_lights"
