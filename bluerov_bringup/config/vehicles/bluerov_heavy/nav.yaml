@@ -71,7 +71,7 @@ filter:
                 noise:      [0.1]    # 0.0002
                 outlier_tolerance: 0.2
                 reject_counter: 8
-            -   frame_id:   "ahrs"  
+            -   frame_id:   "ahrs"
                 config:     "orientation"          
                 noise:      [0.001, 0.001, 0.001,  # [roll, pitch, yaw]
                             1.0, 1.0, 1.0]         # roll_rate, picth_rate, yaw_rate]
