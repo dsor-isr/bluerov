@@ -26,7 +26,9 @@
 
         <!-- Drivers for the dvl -->
         <group if="$(arg dvl_interface)">
-            <node pkg="a50_dvl" type="a50_dvl_node" name="dvl_interface" respawn="true" output="screen" />
+            <node pkg="waterlinked_a50_ros_driver" type="publisher.py" name="dvl_interface" respawn="true" output="screen" />
+            <!-- <node pkg="a50_dvl" type="a50_dvl_node" name="dvl_interface" respawn="true" output="screen" /> -->
+
         </group>
         <!-- <group if="$(arg dvl_interface)"> -->
             <!-- <include file="$(find a50_dvl)/launch/launch_dvl.launch" /> -->
