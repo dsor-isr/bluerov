@@ -42,7 +42,8 @@ cooperative/cpf_wifi_client:
 ## --------------------------- ## 
 drivers:
   bluerov_interface:
-    node_frequency: 50.0 # Hz
+    node_frequency: 25.0 # Hz
+    name_vehicle_id: "#vehicle#"
     topics:
       subscribers:
         thrusters: "/#vehicle#/thrusters/rpm_command"
@@ -66,7 +67,8 @@ drivers:
         lights: "/#vehicle#/set_lights"
 
   dvl_interface:
-    node_frequency: 10.0 # Hz
+    node_frequency: 13.0 # Hz
+    ip: "192.168.2.50"
     topics:
       subscribers: 
         dvl_enable: "/#vehicle#/drivers/dvl/enable"

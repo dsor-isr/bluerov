@@ -1,4 +1,4 @@
-# <img alt="A Medusa stack for BlueROV" src="doc/img/logo/dsor_logo.jpg" height="60"> A Medusa stack for BlueROV
+# <img alt="A FAROL stack for BlueROV" src="doc/img/logo/dsor_logo.jpg" height="60"> A FAROL stack for BlueROV
 This repository holds the medusa code stack from DSOR-ISR (Dynamical Systems for Ocean Robotics - Institute for System Robotics) and additional software to simulate a BlueROV vehicle (regular or heavy configuration) or to serve a real BlueROV vehicle via the drivers code.
 
 ### Requirements
