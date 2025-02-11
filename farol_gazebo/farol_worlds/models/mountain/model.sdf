@@ -1,0 +1,33 @@
+<sdf version="1.5">    
+  <model name="mountain">
+    <link name="mountain">
+      <static>false</static>
+      <collision name="mountain">
+        <pose>0 0 -20 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://mountain/meshes/model.dae</uri>
+            <scale>900 900 900</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="mountain">
+        <pose>0 0 -20 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://mountain/meshes/model.dae</uri>
+            <scale>900 900 900</scale>
+             
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- Bringup file to spawn both the world and 1 drone -->
+<launch>
+
+    <!-- Name of the models in gazebo to which the tether will attach to -->
+    <arg name="vehicle_1" default="mvector" />
+    <arg name="vehicle_2" default="myellow" />
+
+    <!-- generate sdf vehicle model -->
+    <arg name="cmd" default="$(find tether_plugin)/scripts/jinja_gen.py --stdout --vehicle_1=$(arg vehicle_1) --vehicle_2=$(arg vehicle_2) $(find tether_plugin)/models/tether/tether.sdf.jinja $(find tether_plugin)"/>
+    <param command="$(arg cmd)" name="tether"/>
+
+    <!-- Spawn vehicle in Gazebo -->
+    <node name="$(anon vehicle_spawn)" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -param tether -model tether -x 0.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"/>
+
+</launch>

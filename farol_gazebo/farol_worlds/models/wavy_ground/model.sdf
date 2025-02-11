@@ -1,0 +1,33 @@
+<sdf version="1.5">    
+  <model name="wavy_ground">
+    <link name="wavy_ground">
+      <static>false</static>
+      <collision name="wavy_ground">
+        <pose>0 0 -10 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://wavy_ground/meshes/wavy_ground.dae</uri>
+            <scale>200 200 200</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="wavy_ground">
+        <pose>0 0 -10 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://wavy_ground/meshes/wavy_ground.dae</uri>
+            <scale>200 200 200</scale>
+             
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf>

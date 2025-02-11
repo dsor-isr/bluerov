@@ -1,0 +1,33 @@
+<sdf version="1.5">    
+  <model name="floor">
+    <link name="floor">
+      <static>false</static>
+      <collision name="floor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://floor/meshes/10.dae</uri>
+            <scale>40 40 40</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="floor">
+        <pose>0 0 0 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://floor/meshes/10.dae</uri>
+            <scale>40 40 40</scale>
+             
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf>

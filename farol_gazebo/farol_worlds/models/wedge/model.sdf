@@ -1,0 +1,32 @@
+<sdf version="1.5">    
+  <model name="wedge">
+    <link name="wedge">
+      <static>false</static>
+      <collision name="wedge">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://wedge/meshes/45_noisy.stl</uri>
+            <scale>50 50 50</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="wede">
+        <pose>0 0 0 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>ble
+            <uri>model://wedge/meshes/45_noisy.stl</uri>
+            <scale>50 50 50</scale>
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf>

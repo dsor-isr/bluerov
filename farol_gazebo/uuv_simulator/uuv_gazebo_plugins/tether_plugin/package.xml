@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>tether_plugin</name>
+  <version>1.0.0</version>
+  <description>Gazebo Plugin package that allows the simulation of a tether attached to two vehicles</description>
+
+  <maintainer email="antonioantunes5@tecnico.ulisboa.pt">Antonio Antunes</maintainer>
+  <author email="antonioantunes5@tecnico.ulisboa.pt">Antonio Antunes</author>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>gazebo_dev</depend>
+  <depend>eigen</depend>
+
+</package>

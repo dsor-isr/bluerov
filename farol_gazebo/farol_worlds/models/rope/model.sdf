@@ -1,0 +1,33 @@
+<sdf version="1.5">    
+  <model name="rope">
+    <link name="rope">
+      <static>false</static>
+      <collision name="rope">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://rope/meshes/rope.dae</uri>
+            <scale>0.132 0.132 0.2</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="rope">
+        <pose>0 0 0 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://rope/meshes/rope.dae</uri>
+            <scale>0.1 0.1 0.5</scale>
+             
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf>

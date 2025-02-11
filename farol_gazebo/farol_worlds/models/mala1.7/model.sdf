@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="test">
+    <link name="testlink">
+      <visual name="3DModel">
+        <geometry>
+          <mesh>
+            <uri>model://mala1.7/meshes/model.dae</uri>
+            <submesh>
+              <name>3DModel</name>
+            </submesh>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>1.0 1.0 1.0 1.0</diffuse>
+          <specular>0.0 0.0 0.0 1.0</specular>
+          <pbr>
+            <metal>
+              <albedo_map>model://meshes/3DModel.jpg</albedo_map>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+      <!-- <light name="Light" type="point">
+        <diffuse>1.0 1.0 1.0 1.0</diffuse>
+        <attenuation>
+          <range>40.0</range>
+          <linear>0.0</linear>
+          <quadratic>0.0</quadratic>
+          <constant>0.0</constant>
+        </attenuation>
+        <cast_shadows>true</cast_shadows>
+        <intensity>1.0</intensity>
+      </light> -->
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://mala1.7/meshes/model.dae</uri>
+          </mesh>
+        </geometry>
+        <surface/>
+        <contact/>
+        <collide_bitmask>0x01</collide_bitmask>
+      </collision>
+    </link>
+  </model>
+  <static>true</static>
+</sdf>
+
+<!-- 
+<sdf version="1.5">    
+  <model name="floor">
+    <link name="floor">
+      <static>false</static>
+      <collision name="floor">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://floor/meshes/45.dae</uri>
+            <scale>40 40 40</scale>
+          </mesh>
+        </geometry>
+
+      </collision>
+    
+      <visual name="floor">
+        <pose>0 0 0 0 0 0</pose>
+        <cast_shadows>false</cast_shadows>
+        <geometry>
+          <mesh>
+            <uri>model://floor/meshes/45.dae</uri>
+            <scale>40 40 40</scale>
+             
+          </mesh>
+        </geometry>
+        
+      </visual>
+
+    
+       <kinematic>1</kinematic>
+     </link>
+  </model> 
+</sdf> -->
