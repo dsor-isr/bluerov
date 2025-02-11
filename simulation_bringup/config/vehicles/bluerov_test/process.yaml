@@ -1,0 +1,52 @@
+processes:
+    - name: 'load' # Set to true to load all parameters need to run the stack
+      launch_on_startup: true
+      delay_before_start: 0.0
+      cmd: 'roslaunch farol_bringup load_parameters.launch'
+      args: # set to true when you want to add or override any default parameter(s)
+            - common:= 
+            - simulation:= false
+            - addons:= false
+            - navigation:= false
+            - controllers:= false
+            - cooperative:= false
+            - comms:= false
+            - acoustic_data:= false
+            - planning:= false 
+      dependencies:
+            []
+    
+    - name: 'tfs'
+      launch_on_startup: true
+      delay_before_start: 3.0
+      cmd: 'roslaunch farol_bringup simulation_tfs.launch'
+      args:
+            - broadcast_tf:= true
+      dependencies:
+            []
+    
+    - name: 'navigation' # Set to true to use the Dsor Navigation Filter
+      launch_on_startup: true
+      delay_before_start: 5.0
+      cmd: 'roslaunch farol_bringup nav.launch'
+      args:
+            - filter:= true
+            - gnss2utm:= true
+            - gnss2utmoutlier:= false
+            - auvstate2mstate:= false
+            - usbl2pos:= false
+      dependencies:
+            []
+    
+    - name: 'controllers' # Set to true to enable Dsor inner and outer loop controllers
+      launch_on_startup: true
+      delay_before_start: 6.0
+      cmd: 'roslaunch farol_bringup controls.launch'
+      args:
+            - static_thruster_allocation:= true
+            - inner_loops_pid:= true
+            - waypoint:= true
+            - path_following:= true
+            - vehicle_stabilizer:= true
+      dependencies:
+            []
