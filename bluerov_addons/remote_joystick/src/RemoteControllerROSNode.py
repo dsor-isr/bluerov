@@ -31,6 +31,7 @@ class RemoteControllerNode:
         # ---Initialize the ROS NODE---
         rospy.init_node('remote_controller_node')
         self.node_frequency = rospy.get_param('~node_frequency', 10)
+        rospy.logwarn(self.node_frequency)
         self.h_timerActivate = False
 
         # ---Load the ROS configurations---
@@ -103,20 +104,20 @@ class RemoteControllerNode:
         rospy.loginfo('Initializing Publishers for RemoteControllerNode')
 
         # Defining the publishers for linear speed references
-        self.surge_pub = rospy.Publisher(rospy.get_param('~topics/publishers/surge'), Float64, queue_size=1)
-        self.sway_pub = rospy.Publisher(rospy.get_param('~topics/publishers/sway'), Float64, queue_size=1)
-        self.heave_pub = rospy.Publisher(rospy.get_param('~topics/publishers/heave'), Float64, queue_size=1)
+        self.surge_pub = rospy.Publisher(rospy.get_param('~topics/publishers/surge', "/bluerov_heavy0/ref/surge"), Float64, queue_size=1)
+        self.sway_pub = rospy.Publisher(rospy.get_param('~topics/publishers/sway', "/bluerov_heavy0/ref/sway"), Float64, queue_size=1)
+        self.heave_pub = rospy.Publisher(rospy.get_param('~topics/publishers/heave', "/bluerov_heavy0/ref/heave"), Float64, queue_size=1)
 
         # Publish the angular speed references
-        self.yaw_rate_pub = rospy.Publisher(rospy.get_param('~topics/publishers/yaw_rate'), Float64, queue_size=1)
+        self.yaw_rate_pub = rospy.Publisher(rospy.get_param('~topics/publishers/yaw_rate', "/bluerov_heavy0/ref/yaw_rate"), Float64, queue_size=1)
 
         # Publish gimbal references
-        self.gimbal_pub = rospy.Publisher(rospy.get_param('~topics/publishers/gimbal'), Float64, queue_size=1)
+        self.gimbal_pub = rospy.Publisher(rospy.get_param('~topics/publishers/gimbal', "/bluerov_heavy0/gimbal_angle"), Float64, queue_size=1)
 
     def set_lights(self, value: float):
 
         try:
-            double_value = rospy.ServiceProxy(rospy.get_param('~topics/services/lights'), DoubleValue)
+            double_value = rospy.ServiceProxy(rospy.get_param('~topics/services/lights', "/bluerov_heavy0/set_lights"), DoubleValue)
             resp = double_value(value)
             return resp.res
         except rospy.ServiceException as e:

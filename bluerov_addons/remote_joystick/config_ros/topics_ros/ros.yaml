@@ -1,7 +1,6 @@
-node_frequency: 10 #Hz
+node_frequency: 5 #Hz
 
 remote_joystick:
-
   topics:
     # data to be published by the controller to MQTT
     publishers:
