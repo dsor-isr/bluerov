@@ -21,7 +21,7 @@ processes:
       cmd: 'roslaunch bluerov_bringup drivers.launch'
       args:
             - bluerov_interface:= true
-            - dvl_interface:= true
+            - dvl_interface:= false
             - ahrs_interface:= false
       dependencies:
             - load
@@ -54,7 +54,7 @@ processes:
             - rosbridge_server:= false
             - remote_controller:= false
             - joystick:= gamesir
-            - joystick_mode:= bluetooth
+            - joystick_mode:= usb
       dependencies:
             - drivers
             - navigation
@@ -67,7 +67,9 @@ processes:
       cmd: 'roslaunch bluerov_bringup bluerov_addons.launch'
       args:
             - camera_server:= false
-            - remote_joystick:= false
+            - remote_joystick:= true
+            - joystick:= gamesir
+            - joystick_mode:= bluetooth
       dependencies:
             - drivers
             - navigation
@@ -135,7 +137,7 @@ processes:
             - load
     
     - name: 'planning' # Set to true to execute default paths (lines, arc, bernoulli)
-      launch_on_startup: true
+      launch_on_startup: false
       delay_before_start: 13.0
       cmd: 'roslaunch farol_bringup planning.launch'
       args:

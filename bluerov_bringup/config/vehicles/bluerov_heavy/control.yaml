@@ -3,7 +3,7 @@ vehicle_stabilizer:
   # By default we have configured ros.yaml for: surge, sway, heave, roll, pitch, yaw, roll_rate, pitch_rate, yaw_rate, depth, altitude
   # But more can be provided, as long as the corresponding topic name is provided in the ros.yaml
   # If you want to publish no reference, this dictionary should be left empty!
-  references: {'roll': 0.0, 'pitch': 0.0, 'depth': 'null'}
+  references: {'roll': 'null', 'pitch': 'null', 'depth': 'null'}
 
 open_loop_controller:
   gain_Fx: 10.0 # surge speed to -> Force Fx N
