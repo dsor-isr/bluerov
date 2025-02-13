@@ -26,7 +26,7 @@ class Ekf:
         self.Meas = np.array([[0] , [0]],dtype=np.float64)
         self.Yhat = np.array([[0] , [0]],dtype=np.float64)
         self.xhat = np.array([[20] , [0]], dtype=np.float64)
-        self.sigma = np.array([[(10*0.05)**2 ,0],[0,(0.0001*0.05)**2]], dtype=np.float64)
+        self.sigma = np.array([[(10*0.05)**2 ,0],[0,(0.0001*0.05)**2]], dtype=np.float64)a
         self.L = np.array([[1,0],[0,1]], dtype=np.float64)
         self.Q = np.array([[0.1**2,0],[0,(np.deg2rad(1))**2]],dtype=np.float64)
         self.R = np.array([[0.25,0],[0,0.25]],dtype=np.float64)
@@ -47,7 +47,7 @@ class Ekf:
 
     def initialize_publishers(self):
         self.pred_pub = rospy.Publisher("Ekf/predict_state",Floats,queue_size=5)
-        self.h_h_dot_pub = rospy.Publisher("bluerov_heavy0/bottom_profiling/altitude_altitude_rate",Float64MultiArray,queue_size=5)
+        self.h_h_dot_pub = rospy.Publisher("bluerov_heavy0/bottom_profiling/altitude_and_altitude_rate",Float64MultiArray,queue_size=5)
         self.cov_pub = rospy.Publisher("Ekf/covarience",Floats,queue_size=5)
         self.xdot_pub = rospy.Publisher("Ekf/xdot",Floats,queue_size=5)
         self.altimeter_pub = rospy.Publisher("Ekf/altimeter1",Float64,queue_size=5)
