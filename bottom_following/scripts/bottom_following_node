@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import python_counter_ros.PythonCounterNode
+
+if __name__ == '__main__':
+ python_counter_ros.PythonCounterNode.main()
