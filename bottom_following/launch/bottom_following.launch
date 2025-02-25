@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <launch>
 
- <node pkg="bottom_following" type="bottom_following_node" name="bottom_following" respawn="false" output="screen">
-	<rosparam command="load" file="$(find bottom_following)/config/bottom_following.yaml"/>
-</node>
+  <group ns="bottom_following">
+
+    <rosparam command="load" file="$(find bottom_following)/config/bottom_following.yaml"/>
+
+    <node pkg="bottom_following" type="bottom_following_node" name="bottom_following" respawn="false" output="screen">
+    </node>
+
+  </group>
 
 </launch>

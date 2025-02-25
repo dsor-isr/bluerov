@@ -3,9 +3,11 @@ from std_msgs.msg import Float64MultiArray
 from rospy.numpy_msg import numpy_msg
 from rospy_tutorials.msg import Floats
 from std_msgs.msg import Float64
+from sensor_msgs.msg import Range
 import numpy as np
 import rospy
 import math
+from a50_dvl.msg import DVL
 
 def wrap_to_pi(angle):
 
@@ -26,7 +28,7 @@ class Ekf:
         self.Meas = np.array([[0] , [0]],dtype=np.float64)
         self.Yhat = np.array([[0] , [0]],dtype=np.float64)
         self.xhat = np.array([[20] , [0]], dtype=np.float64)
-        self.sigma = np.array([[(10*0.05)**2 ,0],[0,(0.0001*0.05)**2]], dtype=np.float64)a
+        self.sigma = np.array([[(10*0.05)**2 ,0],[0,(0.0001*0.05)**2]], dtype=np.float64)
         self.L = np.array([[1,0],[0,1]], dtype=np.float64)
         self.Q = np.array([[0.1**2,0],[0,(np.deg2rad(1))**2]],dtype=np.float64)
         self.R = np.array([[0.25,0],[0,0.25]],dtype=np.float64)
@@ -44,6 +46,9 @@ class Ekf:
         rospy.Subscriber("/bluerov_heavy0/measurement/position",Measurement,self.altitude_callback)
         rospy.Subscriber("/bluerov_heavy0/measurement/velocity",Measurement,self.velocity_callback)
         rospy.Subscriber("/bluerov_heavy0/measurement/orientation",Measurement,self.orientation_callback)
+        rospy.Subscriber("/bluerov_heavy0/drivers/dvl/data",DVL,self.dvl_callback)
+        rospy.Subscriber(rospy.get_param('~/topics/subscribers/dvl_beam_sim', '/bluerov_heavy0/dvl_sonar0'), Range, self.dvl_range_sim_callback)
+        
 
     def initialize_publishers(self):
         self.pred_pub = rospy.Publisher("Ekf/predict_state",Floats,queue_size=5)
@@ -61,22 +66,26 @@ class Ekf:
 
     def altitude_callback(self,msg):
         value = msg.value
-        if msg.header.frame_id == "bluerov_heavy0/altimeter1_link":# edited xarco of altimeter for changing topic
+        if "altimeter" in msg.header.frame_id:# edited xarco of altimeter for changing topic
             self.Meas[0][0] = msg.value[0]
             self.altimeter_pub.publish(Float64(msg.value[0]))
-        # print("altitude:",self.Meas[0][0])
+        print("altitude:",self.Meas[0][0])
         
-        if msg.header.frame_id == "bluerov_heavy0/altimeter2_link":
-            self.Meas[1][0] = msg.value[0]
-            self.altimeter2_pub.publish(Float64(msg.value[0]))
-
+        # if msg.header.frame_id == "bluerov_heavy0/altimeter2_link":
+        #     self.Meas[1][0] = msg.value[0]
+        #     self.altimeter2_pub.publish(Float64(msg.value[0]))
+    
+    def dvl_callback(self, msg):
+        self.Meas[1][0] = (msg.beams[0].distance + msg.beams[1].distance)/2
+        print(f"DVL range: {self.Meas[1][0]}")
+        
+    def dvl_range_sim_callback(self, msg):
+        self.h2 = msg.range
 
     def orientation_callback(self,msg):
         value = msg.value
         self.theta = value[1]
 
-
-    
     def velocity_callback(self,msg):
         msg1 = msg
         self.Vu = float(int(msg1.value[0]*1e2))/1e2
@@ -105,10 +114,10 @@ class Ekf:
         # self.h = self.xhat[0][0]  
         self.beta = self.xhat[1][0]
         hdot = -self.Vz - np.tan(self.beta)*V
-        print("hdot",hdot)
+        #print(f"hdot",hdot)
         betadot = 0
         xph = self.xhat[0][0]  + hdot*self.dt.to_sec()
-        print("xph,dt:",xph,",",self.dt.to_sec())
+        #print("xph,dt:",xph,",",self.dt.to_sec())
         xpbeta = self.beta + betadot*self.dt.to_sec()
         xdot = np.array([[xph],[xpbeta]])
         self.xdot_pub.publish(xdot)
@@ -121,7 +130,7 @@ class Ekf:
         Cdhat = np.array([[np.cos(self.beta)/np.cos(self.beta-self.theta) , ((-np.sin(self.beta)*np.cos(self.beta-self.theta))+(np.sin(self.beta-self.theta)*np.cos(self.beta))*self.xhat[0][0])/np.cos(self.beta-self.theta)**2],
                             [np.cos(self.beta)/np.cos(self.beta-self.theta-self.alpha) , ((-np.sin(self.beta)*np.cos(self.beta-self.theta-self.alpha))+(np.sin(self.beta-self.theta-self.alpha)*np.cos(self.beta))*self.xhat[0][0])/np.cos(self.beta-self.theta-self.alpha)**2]])
         
-        print(" \u03B2 :",self.beta," \u03B8 :",self.theta," heigh:",xph)
+        #print(" \u03B2 :",self.beta," \u03B8 :",self.theta," heigh:",xph)
         #covariance prediction
         sigmap = np.add(np.linalg.multi_dot([Ahat,self.sigma,Ahat.T]),np.linalg.multi_dot([self.L,self.Q,self.L.T]))
         Sk = np.add(np.linalg.multi_dot([Cdhat,sigmap,Cdhat.T]),self.R)
@@ -130,7 +139,7 @@ class Ekf:
 
 
         #update covariance
-        print("\n Ahat:",Ahat,"\n Sk: \n\n",Sk,"\n Cdhat: \n\n",Cdhat,"\n sigmap: \n\n",sigmap, "\n Hk: \n\n",Hk,"\n Sk_inv: \n\n",Sk_inv)
+        # print("\n Ahat:",Ahat,"\n Sk: \n\n",Sk,"\n Cdhat: \n\n",Cdhat,"\n sigmap: \n\n",sigmap, "\n Hk: \n\n",Hk,"\n Sk_inv: \n\n",Sk_inv)
         self.sigma = np.subtract(sigmap,np.linalg.multi_dot([sigmap,Hk.T,Sk_inv,Cdhat,sigmap]))
         covX = np.diag(self.sigma) 
         self.cov_pub.publish(covX)
@@ -140,12 +149,12 @@ class Ekf:
         self.Yhat[1][0] = self.xhat[0][0]*np.cos(self.beta)/np.cos(self.beta-self.theta-self.alpha)
 
         #update states
-        print("\n Yhat: \n\n",self.Yhat,"\n Meas: \n\n",self.Meas)
+        # print("\n Yhat: \n\n",self.Yhat,"\n Meas: \n\n",self.Meas)
         self.xhat = np.add(self.xhat,np.linalg.multi_dot([Hk,np.subtract(self.Meas,self.Yhat)]))
         xhat_copy = self.xhat
         xhat_copy[1] = wrap_to_pi(self.xhat[1])
         self.pred_pub.publish(xhat_copy)
-        print("xhat",self.xhat)
+        # print("xhat",self.xhat)
         # self.altitude_rate_pub.publish(Float64(self.xhat[0]))
 
         msg = Float64MultiArray()

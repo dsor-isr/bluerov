@@ -1,6 +1,15 @@
-node_frequency: 10
-start_num: 0
-
 bottom_following:
-  alpha:  30      # Degrees measured from vertical body axis
+  node_frequency: 10
+  start_num: 0
+  alpha: 27      # Degrees measured from vertical body axis
   oulier_rejection: false
+
+  topics:
+    publishers:
+      surge: "/bluerov_heavy0/ref/surge"
+      sway: "/bluerov_heavy0/ref/sway"
+      heave: "/bluerov_heavy0/ref/heave"
+    subscribers:
+      speed: "/bluerov_heavy0/measurement/velocity"
+      altimeter: "/bluerov_heavy0/measurement/position"
+      dvl_beams: "/bluerov_heavy0/drivers/dvl/data"

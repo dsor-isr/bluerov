@@ -6,7 +6,7 @@
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://floor/meshes/45.dae</uri>
+            <uri>model://floor/meshes/flat_seabed.dae</uri>
             <scale>40 40 40</scale>
           </mesh>
         </geometry>
@@ -18,7 +18,7 @@
         <cast_shadows>false</cast_shadows>
         <geometry>
           <mesh>
-            <uri>model://floor/meshes/45.dae</uri>
+            <uri>model://floor/meshes/flat_seabed.dae</uri>
             <scale>40 40 40</scale>
              
           </mesh>
