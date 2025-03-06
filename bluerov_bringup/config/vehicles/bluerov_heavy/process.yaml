@@ -67,7 +67,7 @@ processes:
       cmd: 'roslaunch bluerov_bringup bluerov_addons.launch'
       args:
             - camera_server:= false
-            - remote_joystick:= true
+            - remote_joystick:= false
             - joystick:= gamesir
             - joystick_mode:= bluetooth
       dependencies:

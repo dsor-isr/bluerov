@@ -1,6 +1,6 @@
 filter:
-    originLat: 38.765852
-    originLon: -9.09281873
+    originLat: 15.459817
+    originLon: 73.801530
     
     tf:                                             # TF publishers
         broadcast: true                             # flag to publish TF
@@ -31,7 +31,7 @@ filter:
         # Filter won't work without a initial position
         manually_initialization:
                 frame_id: ""
-                value: [4290822.198309483, 491906.60293571133, 0.0,    # Position - x, y, z
+                value: [1709534.12, 371427.80, 0.0,    # Position - x, y, z
                         0.000000000000000, 0.0000000000000000, 0.0,    # Velocity - dx, dy, dz
                         0.000000000000000, 0.0000000000000000, 0.0,    # Orientation - r, p, ya
                         0.000000000000000, 0.0000000000000000, 0.0,    # Orientation Rate - dr, dp, dya
