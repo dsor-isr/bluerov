@@ -31,6 +31,16 @@ processes:
       dependencies:
             []
     
+    - name: 'simulation' # Set to true to use the simple simulation
+      launch_on_startup: false
+      delay_before_start: 1.0
+      cmd: 'roslaunch farol_bringup sim.launch'
+      args:
+            - dynamics:= true
+            - sensors:= true
+      dependencies:
+            []
+
     - name: 'bags' # Set to true to automatically save all rostopics in rosbags
       launch_on_startup: false
       delay_before_start: 2.0
@@ -51,7 +61,7 @@ processes:
             []
     
     - name: 'addons' # Set to true to use several addons like operation console and remote controller
-      launch_on_startup: true 
+      launch_on_startup: false 
       delay_before_start: 4.0
       cmd: 'roslaunch farol_bringup addons.launch'
       args:
@@ -91,7 +101,7 @@ processes:
             []
     
     - name: 'planning' # Set to true to execute default paths (lines, arc, bernoulli)
-      launch_on_startup: true
+      launch_on_startup: false
       delay_before_start: 9.0
       cmd: 'roslaunch farol_bringup planning.launch'
       args:
