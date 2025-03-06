@@ -74,15 +74,19 @@ class RemoteControllerNode:
         desired_inputs['yaw_rate'] = desired_inputs['yaw_rate'] * desired_inputs['speed_gains']
 
         # Log the desired inputs
-        print(desired_inputs)
+        #print(desired_inputs)
 
         # Publish surge, sway and heave
-        self.surge_pub.publish(desired_inputs["surge"])
-        self.sway_pub.publish(desired_inputs["sway"])
-        self.heave_pub.publish(desired_inputs["heave"])
+        if desired_inputs["surge"] != 0:
+            self.surge_pub.publish(desired_inputs["surge"])
+        if desired_inputs["sway"] != 0:
+            self.sway_pub.publish(desired_inputs["sway"])
+        if desired_inputs["heave"] != 0:
+            self.heave_pub.publish(desired_inputs["heave"])
     
         # Publish yaw-rate
-        self.yaw_rate_pub.publish(desired_inputs["yaw_rate"])
+        if desired_inputs["yaw_rate"] != 0:
+            self.yaw_rate_pub.publish(desired_inputs["yaw_rate"])
 
         # Publish the gimbal angle
         self.gimbal_pub.publish(desired_inputs["camera_angle"])
