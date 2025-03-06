@@ -8,9 +8,9 @@ class OutlierRejection:
     For reference, see Morgado et al., 2014.
     """
     
-    def __init__(self, K, threshold, n):
-        self.K = K
-        self.buffer = np.full((n, K), np.nan)  # Initialize buffer for all channels
+    def __init__(self, W, threshold, n):
+        self.W = W
+        self.buffer = np.full((n, W), np.nan)  # Initialize buffer for all channels
         self.idx = 0
         self.count = 0
         self.threshold = threshold
@@ -22,11 +22,11 @@ class OutlierRejection:
         
         # Update buffer
         self.buffer[:, self.idx] = y
-        self.idx = (self.idx + 1) % self.K
-        self.count = min(self.count + 1, self.K)
+        self.idx = (self.idx + 1) % self.W
+        self.count = min(self.count + 1, self.W)
         
         # Check if we have enough samples
-        if self.count < self.K:
+        if self.count < self.W:
             return y_filtered
         
         # Compute median and MAD
@@ -35,7 +35,6 @@ class OutlierRejection:
         
         # Identify outliers
         robust_z_scores = np.abs(y - medians) / mad_values
-        self.debug = medians
         is_outliers = robust_z_scores > self.threshold
         
         if np.any(is_outliers):

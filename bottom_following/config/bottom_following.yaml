@@ -3,6 +3,10 @@ bottom_following:
   start_num: 0
   alpha: 27      # Degrees measured from vertical body axis
   oulier_rejection: false
+  
+  # ξ=0.7, ω0=0.08 (must be 5 times slower than speed inner-loop)
+  kp: 0.1120
+  ki: 0.0064
 
   topics:
     publishers:

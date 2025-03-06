@@ -8,9 +8,12 @@ class BottomFollowing:
     This is similar to a "sensor fusion" Kalman filter.
     """
     
-    def __init__(self, y0, alpha):
+    def __init__(self, y0, alpha, kp, ki):
         self.alpha = alpha
         self.e=0
+        # Gains for w0 = 0.05, ksi = 0.7
+        self.kp = kp        
+        self.ki = ki
         
         # Compute D from initial measurement
         h1 = np.array([[0, y0[0]]]).T
@@ -65,14 +68,14 @@ class BottomFollowing:
     
     def controller(self, d_ref, U, u_max):
         """Implements a simple nonlinear controller based on Lyapunov theory."""
-        Kp = 0.1  # Controller gain
+          # Controller gain
         D = self.xhat[:2]  # Extract D
         S = np.array([self.xhat[1], -self.xhat[0]])  # Rotate D 90º anti-clockwise
         S /= np.linalg.norm(S)  # Normalize
         e = d_ref - np.linalg.norm(D)  # Compute error
         
 
-        V =  U * S - Kp * e * D / np.linalg.norm(D)
+        V =  U * S - self.kp * e * D / np.linalg.norm(D)
         if np.linalg.norm(V) > u_max:
             V = V / np.linalg.norm(V) *u_max
         print(V)
