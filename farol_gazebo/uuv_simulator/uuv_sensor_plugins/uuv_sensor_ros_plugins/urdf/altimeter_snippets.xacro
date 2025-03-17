@@ -100,7 +100,7 @@
                     <alwaysOn>true</alwaysOn>
                     <updateRate>15.0</updateRate>
                     <topicName>measurement/position</topicName>
-                    <frameName>${namespace}/altimeter${suffix}_link</frameName>
+                    <frameName>${namespace}_altimeter#</frameName>
                     <fov>${field_of_view}</fov>
                     <radiation>ultrasound</radiation>
                     <namespace>${namespace}</namespace>

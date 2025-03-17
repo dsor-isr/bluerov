@@ -36,14 +36,11 @@
   </xacro:default_dvl_bluerov_macro>
 
   <!-- Altimeter sensor 1 -->
-  <xacro:bluerov_altimeter namespace="${namespace}" parent_link="$(arg namespace)/base_link" suffix="1">
+  <xacro:bluerov_altimeter namespace="${namespace}" parent_link="$(arg namespace)/base_link" suffix="">
     <origin xyz="0.05 -0.07 -0.17" rpy="0 ${0.5*pi} 0"/>
   </xacro:bluerov_altimeter>
 
-  <!-- Altimeter sensor 2 -->
-  <!-- <xacro:bluerov_altimeter namespace="${namespace}" parent_link="$(arg namespace)/base_link" suffix="2">
-    <origin xyz="0.05 -0.07 -0.17" rpy="0 ${1.047197551} 0"/>
-  </xacro:bluerov_altimeter>      -->
+ 
   <!-- UDP camera -->
   <!-- <xacro:udp_camera_sensor_macro namespace="${namespace}" parent_link="$(arg namespace)/base_link" suffix="" 
     gst_udp_host="127.0.0.1" gst_udp_port="5600" width="640" height="360" hfov="2.0" update_rate="10" stddev="0.0" >
