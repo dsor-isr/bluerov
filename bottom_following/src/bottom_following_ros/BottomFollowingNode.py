@@ -242,9 +242,10 @@ class BottomFollowingNode():
                 
                     # reference in inertial frame
                     V_ref = self.bottom_follower.controller(self.d_ref, self.v_ref, self.u_max)
+                    V_ref = self._rot(-self.pitch)@V_ref
                     
                     self.surge_ref_pub.publish(Float64(V_ref[0]))
-                    self.sway_ref_pub.publish(Float64(0))
+                    #self.sway_ref_pub.publish(Float64(0))
                     self.heave_ref_pub.publish(Float64(V_ref[1]))
             
             # debugging message

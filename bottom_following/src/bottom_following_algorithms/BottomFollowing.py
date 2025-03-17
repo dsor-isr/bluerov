@@ -14,6 +14,7 @@ class BottomFollowing:
         # Gains for w0 = 0.05, ksi = 0.7
         self.kp = kp        
         self.ki = ki
+        self.int = 0
         
         # Compute D from initial measurement
         h1 = np.array([[0, y0[0]]]).T
