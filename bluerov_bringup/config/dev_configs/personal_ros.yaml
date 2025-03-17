@@ -49,6 +49,7 @@ drivers:
         thrusters: "/#vehicle#/thrusters/rpm_command"
         gimbal: "/#vehicle#/gimbal_angle"
         thrusters_safety: "/#vehicle#/thrusters_safety"
+        enable: "/#vehicle#/enable_gps"
       publishers:
         imu: "/#vehicle#/measurement/orientation"
         altimeter: "/#vehicle#/measurement/position"

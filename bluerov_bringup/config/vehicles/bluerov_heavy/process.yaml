@@ -62,7 +62,7 @@ processes:
             - load
     
     - name: 'bluerov_addons'
-      launch_on_startup: true
+      launch_on_startup: false
       delay_before_start: 8.0
       cmd: 'roslaunch bluerov_bringup bluerov_addons.launch'
       args:
