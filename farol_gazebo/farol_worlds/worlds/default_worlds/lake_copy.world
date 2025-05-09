@@ -39,9 +39,13 @@
     </scene>
 
     <!-- Origin placed somewhere in the middle of the Bodensee (Germany)  -->
-    <spherical_coordinates>
+    <!-- <spherical_coordinates>
       <latitude_deg>47.6278771</latitude_deg>
       <longitude_deg>9.334553</longitude_deg>
+    </spherical_coordinates> -->
+    <spherical_coordinates>
+      <latitude_deg>38.765824</latitude_deg>
+      <longitude_deg>-9.092815</longitude_deg>
     </spherical_coordinates>
 
       <!-- Global light source -->
@@ -70,9 +74,14 @@
       <pose>0 0 0 0 0 0</pose>
     </include>
 
+    <!-- <include>
+      <uri>model://floor_10deg</uri>
+      <pose>0 0 -20 0 0 1.52</pose>
+    </include> -->
+
     <include>
       <uri>model://floor_10deg</uri>
-      <pose>0 30 20 0 0 3.1416</pose>
+      <pose>0 0 20 0 0 1.52</pose>
     </include>
 
     <plugin name="underwater_current_plugin" filename="libuuv_underwater_current_ros_plugin.so">

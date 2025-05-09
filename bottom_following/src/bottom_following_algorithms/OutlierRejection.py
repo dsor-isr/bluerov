@@ -1,4 +1,5 @@
 import numpy as np
+import rospy
 
 class OutlierRejection:
     """
@@ -14,12 +15,11 @@ class OutlierRejection:
         self.idx = 0
         self.count = 0
         self.threshold = threshold
-        self.debug = np.zeros(2)
+        self.n = n
     
     def compute(self, y):
         y_filtered = np.copy(y)
-        n = y.shape[0]
-        
+
         # Update buffer
         self.buffer[:, self.idx] = y
         self.idx = (self.idx + 1) % self.W
@@ -38,8 +38,11 @@ class OutlierRejection:
         is_outliers = robust_z_scores > self.threshold
         
         if np.any(is_outliers):
-            print("Outlier rejected")
-        
+            if self.n == 1:
+                rospy.loginfo(f"[Altimeter] Outlier rejected")
+            else:
+                rospy.loginfo(f"[DVL] Outlier rejected in beams {[i for i, val in enumerate(is_outliers) if val]}")
+                
         # Replace outliers with median
         y_filtered[is_outliers] = medians[is_outliers]
         

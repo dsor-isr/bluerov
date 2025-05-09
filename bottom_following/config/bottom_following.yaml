@@ -17,3 +17,4 @@ bottom_following:
       speed: "/bluerov_heavy0/measurement/velocity"
       altimeter: "/bluerov_heavy0/measurement/position"
       dvl_beams: "/bluerov_heavy0/drivers/dvl/data"
+      dvl_beams_sim: "/bluerov_heavy0/dvl"

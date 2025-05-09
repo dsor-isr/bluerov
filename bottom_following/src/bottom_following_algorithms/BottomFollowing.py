@@ -1,93 +1,156 @@
 import numpy as np
-import rospy 
-from math import pi, asin
+import rospy
+from math import pi, asin, sin, cos
+from scipy.spatial.transform import Rotation as R
+np.set_printoptions(precision=3, suppress=True)
 
 class BottomFollowing:
     """
     This implements an estimator to obtain an estimate of the vector D.
     This is similar to a "sensor fusion" Kalman filter.
     """
-    
-    def __init__(self, y0, alpha, kp, ki):
+    def __init__(self, h, attitude, alpha, kp, ki):
         self.alpha = alpha
         self.e=0
         # Gains for w0 = 0.05, ksi = 0.7
-        self.kp = kp        
+        self.kp = kp
         self.ki = ki
         self.int = 0
-        
-        # Compute D from initial measurement
-        h1 = np.array([[0, y0[0]]]).T
-        h2 = self._rot(pi/2-alpha) @ np.array([[y0[1],0]]).T
-        S = h2 - h1
-        Ps = np.eye(2) - np.outer(S, S) / np.linalg.norm(S)**2
-        D = Ps @ h1
-        
+
         # Initialize filter state and covariance
-        self.xhat = np.vstack((D, np.zeros((2,1))))
-        self.P = np.eye(4)
-        
+        self.xhat = self._compute_D(h, attitude)
+        self.P = np.eye(3)
+
         # Filter parameters
-        self.R = 10 * np.eye(4)
-        self.Q = 0.01 * np.eye(4)
-        
-        self.debug = np.zeros(1)
-        self.D_dot = np.zeros((2,1))
-    
-    def compute(self, u, y, pitch, Dt):
-        """Perform the predict and update steps of the Kalman filter."""
-        # Predict Step
-        Ak = np.kron(np.array([[1, Dt], [0, 1]]), np.eye(2))
-        self.xhat = Ak @ self.xhat
-        self.P = Ak @ self.P @ Ak.T + self.Q
-        
-        #TODO: add pitch
-        # Compute D
-        h1 = self._rot(pitch) @ np.array([[0, y[0]]]).T
-        h2 = self._rot(pitch) @ self._rot(pi/2-self.alpha) @ np.array([[y[1],0]]).T
-        S = h2 - h1
-       # Ps = np.eye(2) - np.outer(S, S) / np.linalg.norm(S)**2
-        Ps = np.eye(2) - (S@S.T) / np.linalg.norm(S)**2
-        D = Ps @ h2
-        
-        # Compute D_dot
-        S1 = np.array([[self.xhat[1], -self.xhat[0]]]).T
-        S1 /= np.linalg.norm(S1)
-        Ps1 = np.eye(2) - np.outer(S1, S1) / np.linalg.norm(S1)**2
-        Ddot = -Ps1 @ u
-        
-        # Build measurement vector
-        y_meas = np.vstack((D, Ddot))   
-        
-        # Update step
-        K = self.P @ np.linalg.inv(self.P + self.R)
-        self.xhat = self.xhat + K @ (y_meas - self.xhat)
-        self.P = (np.eye(4) - K) @ self.P
-        
-        # Store D_dot
-        self.D_dot = self.xhat[2:4]
-    
-    def controller(self, d_ref, U, u_max):
-        """Implements a simple nonlinear controller based on Lyapunov theory."""
-          # Controller gain
-        D = self.xhat[:2]  # Extract D
-        S = np.array([self.xhat[1], -self.xhat[0]])  # Rotate D 90º anti-clockwise
-        S /= np.linalg.norm(S)  # Normalize
-        e = d_ref - np.linalg.norm(D)  # Compute error
+        self.R = 10 * np.eye(3)
+        self.Q = 0.01 * np.eye(3)
+
+        #debug type shii
+        self.n = np.array([None,None,None])
+        self.D_B = np.array([None,None,None])
         
 
-        V =  U * S - self.kp * e * D / np.linalg.norm(D)
-        if np.linalg.norm(V) > u_max:
-            V = V / np.linalg.norm(V) *u_max
-        print(V)
-        self.e=e
-        return V
-    
+    def compute(self, h, body_velocity, attitude, Dt):
+        """Perform the predict and update steps of the Kalman filter."""
+        #####  ---  Predict Step  ---  #####
+        # Rotate DVL velocity to body
+        V = self._rot(attitude[0],attitude[1],attitude[2]) @ body_velocity
+        # Project total inertial velocity on D
+        D_dot = np.dot(V, self.xhat)/np.dot(self.xhat, self.xhat)*self.xhat
+
+        # Propagate state forward
+        self.xhat = self.xhat + Dt*D_dot
+        self.P = self.P + self.Q
+
+
+        #####  ---  Update Step  ---  #####
+        # Compute noisy D from measurements
+        D = self._compute_D(h, attitude)
+
+        # Update step
+        K = self.P @ np.linalg.inv(self.P + self.R)
+        self.xhat = self.xhat + K @ (D - self.xhat)
+        self.P = (np.eye(3) - K) @ self.P
+
+
+    def controller(self, d_ref, u_ref, heading_ref, u_max):
+        D = self.xhat.reshape((3,1))
+        n = (D / np.linalg.norm(D))
+        
+        ##########  Attitude Control  #####
+        z_B_des = n
+        xc = np.array([cos(heading_ref), sin(heading_ref),0]).reshape((3,1))
+        y_B_des = np.cross(n.T, xc.T).T
+        y_B_des = y_B_des/np.linalg.norm(y_B_des)
+        x_B_des = np.cross(y_B_des.T, z_B_des.T).T
+        R_des = np.hstack((x_B_des, y_B_des, z_B_des))
+        
+        # Compute euler angles from rotation matrix
+        attitude_ref = R.from_matrix(R_des).as_euler('xyz', degrees=False)
+        
+        
+        #########  Velocity Control  #######
+        # ___  Parallel velocity  ___ #
+        
+        # Desired velocity vector from the path following in inertial frame
+        # V_I_ref = np.array([u_ref*cos(heading_ref),u_ref*sin(heading_ref),0]).reshape((3,1))
+        # # Projection operator
+        # P_D = np.eye(3) - (D*D.T)/(np.linalg.norm(D)**2)
+        # # Project horizontal reference velocity on the plane tangent to the slope
+        # V_I_ref_p  = P_D @ V_I_ref
+        # # normalize velocity to lenght equal to surge ref
+        # V_I_ref_p = V_I_ref_p / np.linalg.norm(V_I_ref_p)
+        V_P = u_ref*x_B_des
+
+        #####  ---  Normal velocity  ---  #####
+        # Compute error
+        self.e = d_ref - np.linalg.norm(D)
+        # Velocity component normal to the plane tangent to the terrain
+        V_D = - self.kp * self.e * (D / np.linalg.norm(D))
+
+        # Total velocity
+        V_T_ref = V_D + V_P
+        # Saturate velocity norm
+        if np.linalg.norm(V_T_ref) > u_max:
+            V_T_ref = V_T_ref / np.linalg.norm(V_T_ref) *u_max
+            
+        # ____  Attitude Control  ____ #
+        z_B_des = n
+        xc = np.array([cos(heading_ref), sin(heading_ref),0]).reshape((3,1))
+        y_B_des = np.cross(n.T, xc.T).T
+        y_B_des = y_B_des/np.linalg.norm(y_B_des)
+        x_B_des = np.cross(y_B_des.T, z_B_des.T).T
+        R_des = np.hstack((x_B_des, y_B_des, z_B_des))
+        
+        # Compute euler angles from rotation matrix
+        attitude_ref = R.from_matrix(R_des).as_euler('xyz', degrees=False) 
+
+        return V_T_ref, attitude_ref
+
+    #TODO: if using DVL in another orientation, this should be changed. should be implemented better but ...
+    def _compute_D(self, h, attitude):
+        # Compute matrix with all range measurements in the body frame
+        H_b = np.zeros((3,5))
+        H_b[:,0] = [sin(self.alpha)*h[0],0,cos(self.alpha)*h[0]]
+        H_b[:,1] = [0,sin(-self.alpha)*h[1],cos(-self.alpha)*h[1]]
+        H_b[:,2] = [sin(-self.alpha)*h[2],0,cos(-self.alpha)*h[2]]
+        H_b[:,3] = [0,sin(self.alpha)*h[3],cos(self.alpha)*h[3]]
+        H_b[:,4] = [0,0,h[4]]
+
+        # Compute and remove centroid
+        h_c = (np.sum(H_b, axis=1)/5).reshape((3,1))
+        H_0 = H_b-h_c
+
+        # Compute SVD and extract plane normal
+        U, Σ, V = np.linalg.svd(H_0)
+        n = U[:, -1]
+        self.n = n
+
+        # Compute the vector that points from the origin to the closest point on the plane
+        D_B = abs(n.T @ h_c)/(np.linalg.norm(n)**3) * n
+        self.D_B = D_B
+
+        # Convert to inertial frame orientation
+        D_I = self._rot(attitude[0],attitude[1],attitude[2]) @ D_B
+
+        return D_I
+
+
+    """Compute the 3D rotation matrix from roll, pitch, and yaw (in radians)."""
     @staticmethod
-    def _rot(angle):
-        """Return a 2D rotation matrix for the given angle in radians."""
-        c, s = np.cos(angle), np.sin(angle)
-        return np.array([[c, -s], [s, c]])
+    def _rot(roll, pitch, yaw):
+        cr, sr = np.cos(roll), np.sin(roll)
+        cp, sp = np.cos(pitch), np.sin(pitch)
+        cy, sy = np.cos(yaw), np.sin(yaw)
+
+        R = np.array([
+            [cy * cp, cy * sp * sr - sy * cr, cy * sp * cr + sy * sr],
+            [sy * cp, sy * sp * sr + cy * cr, sy * sp * cr - cy * sr],
+            [-sp,     cp * sr,                cp * cr]
+        ])
+
+        return R
+
 
     @staticmethod
     def _sat(value):
@@ -96,16 +159,4 @@ class BottomFollowing:
         if value <-1:
             return -1
         return value
-    
 
-################################## MEMES #########################################
-    
-        #     gamma = asin(self._sat(-Kp*e))
-        # V = self._rot(gamma)@S
-        # print(V)
-        
-        
-        
-        
-        #         ksi =  U * S - Kp * e * D  # Desired velocity
-        # V = U * ksi / np.linalg.norm(ksi)  # Normalized velocity

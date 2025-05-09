@@ -14,7 +14,7 @@
     -->
 
   <!-- <xacro:property name="mass" value="15.5"/> -->
-  <xacro:property name="mass" value="10.5"/>
+  <xacro:property name="mass" value="11.5"/>
  
   <!-- Vehicle's bounding box: width, length, height -->
   <xacro:property name="x_size" value="0.448"/>
@@ -24,7 +24,7 @@
   <xacro:property name="z_size" value="0.2539"/>
 
   <!-- Volume -->
-  <xacro:property name="volume" value="0.011054"/>
+  <xacro:property name="volume" value="0.0115"/>
 
   <!-- Center of gravity -->
   <xacro:property name="cog" value="0 0 0"/>

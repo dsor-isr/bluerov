@@ -52,8 +52,9 @@ inner_loops_pid:
   min_turn_radius: 5.0
   turn_radius_speed_t_max: 10.0
 
-  # Yaw Params
+
   controllers:
+    #### Attitude Controllers ####
     roll:
       # w0 =2, xi=0.7  
       # kp: 4.8872
@@ -82,12 +83,9 @@ inner_loops_pid:
       # ki: 3.0839
       # kd: 1.3189
       # w0 = 1, xi=0.7
-      kp: 0.732
-      ki: 0.24 
-      kd: 0.628 
-      # kp: 0.6579
-      # ki: 0.9137
-      # kd: 0.7707
+      kp: 0.6579
+      ki: 0.9137
+      kd: 0.7707
       max_err:  70.0 # deg
       min_err: -70.0 # deg  
       max_out:  1.0  # N.m
@@ -102,22 +100,22 @@ inner_loops_pid:
       max_out:  10.0  # N.m
       min_out: -10.0
       debug: true
-    # Yaw Rate Params
+    
+    #### Attitude Rate  Controllers ####
     yaw_rate:
       lpf_fc: 0.5 # low pass filter cutoff frequency
       kp: 0.00
       ki: 0.0 #0.005
-      #kd: 0.002
       kff: 0.00025 #0.007  = 10/ 10.000
       kff_d: 0.000125
-      #kff_lin_drag: 0.005
-      #kff_quad_drag: 0.0
       max_err:  50.0 # deg/s
       min_err: -50.0 # deg/s  
       max_out:  80.0 # N.m
       min_out: -80.0
       debug: true
-    # Surge Params
+    
+
+    #### Speed Controllers ####
     surge:
       kp: 1.415
       ki: 7.547
@@ -132,9 +130,8 @@ inner_loops_pid:
       max_out:  30.0 # N
       min_out: -30.0
       debug: true
-    # Sway Params
+
     sway:
-      #lpf_fc: 0.5 # low pass filter cutoff frequency
       kp: -1.078
       ki: 8.62
       max_ref:  0.5  # m/s
@@ -144,15 +141,8 @@ inner_loops_pid:
       max_out:  20.0 # N
       min_out: -20.0
       debug: true
-    # Heave params
+
     heave:
-      # # 0.7, 0.3
-      # kp: 8.25
-      # ki: 3.81
-      # # 0.9, 0.3
-      # kp: 13.33
-      # ki: 3.81
-      # 0.8, 0.3
       kp: 10.79
       ki: 3.81
       # buoyancy 
@@ -164,7 +154,8 @@ inner_loops_pid:
       max_out:  20.0 # N
       min_out: -20.0
       debug: true
-    # Depth Params
+
+    #### Vertical Controllers ####
     depth:
       kp: 5.0
       ki: 0.30
@@ -175,7 +166,7 @@ inner_loops_pid:
       min_out: -20.0
       min_alt: -200.0 # m
       debug: true
-    # Altitude Params
+    
     altitude:
       kp: 16.0 
       ki: 0.0

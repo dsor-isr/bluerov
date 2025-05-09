@@ -4,14 +4,30 @@ project(bottom_following)
 find_package(catkin 
   # ROS components
   REQUIRED COMPONENTS
+  rospy
   std_msgs
   farol_msgs
-  rospy
   dsor_msgs
+  geometry_msgs
+  auv_msgs
+  message_generation 
 )
+
+add_message_files(
+	DIRECTORY msg
+)
+
+# add_service_files(
+# 	DIRECTORY srv
+# )
 
 catkin_python_setup()
 
-catkin_package(
-  CATKIN_DEPENDS
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+   geometry_msgs
+   auv_msgs
 )
+
+catkin_package(	CATKIN_DEPENDS message_runtime)

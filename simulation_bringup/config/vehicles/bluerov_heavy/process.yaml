@@ -23,7 +23,7 @@ processes:
       args:
             - x:= 0.0
             - y:= 0.0
-            - z:= 0.0
+            - z:= -0.5
             - roll:= 0.0
             - pitch:= 0.0
             - yaw:= 1.5708
@@ -42,12 +42,13 @@ processes:
             []
 
     - name: 'bags' # Set to true to automatically save all rostopics in rosbags
-      launch_on_startup: false
+      launch_on_startup: true
       delay_before_start: 2.0
       cmd: 'roslaunch farol_bringup bags.launch'
       args:
-            - prefix:= gazebo
+            - prefix:= bluerov_heavy0_sim
             - onebag:= true
+            - ignore_topics:= /gazebo(.*) | /debug(.*) | /clock(.*)| /hydrodynamics(.*) | /world_models(.*)| (.*)/map | (.*)/camera(.*) | (.*)/air(.*)camera(.*) | (.*)/stereo(.*)
       dependencies:
             []
     
@@ -61,7 +62,7 @@ processes:
             []
     
     - name: 'addons' # Set to true to use several addons like operation console and remote controller
-      launch_on_startup: false 
+      launch_on_startup: true 
       delay_before_start: 4.0
       cmd: 'roslaunch farol_bringup addons.launch'
       args:
@@ -101,7 +102,7 @@ processes:
             []
     
     - name: 'planning' # Set to true to execute default paths (lines, arc, bernoulli)
-      launch_on_startup: false
+      launch_on_startup: true
       delay_before_start: 9.0
       cmd: 'roslaunch farol_bringup planning.launch'
       args:
@@ -109,7 +110,7 @@ processes:
       dependencies:
             []
 
-    - name: 'bottom_following' # Set to true to execute default paths (lines, arc, bernoulli)
+    - name: 'bottom_following' 
       launch_on_startup: true
       delay_before_start: 13.0
       cmd: 'roslaunch bottom_following bottom_following.launch'
