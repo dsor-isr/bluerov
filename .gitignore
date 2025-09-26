@@ -36,3 +36,5 @@
 
 *.pyc*
 .pyc$
+
+.catkin_tools/*
