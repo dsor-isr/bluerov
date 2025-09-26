@@ -1,5 +1,5 @@
 addons/console_server:
-    PORT: 22500 #7080
+    PORT: 7080
 
 cooperative/cpf_wifi_server:
     broadcast_port: 2808

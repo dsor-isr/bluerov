@@ -42,7 +42,7 @@ processes:
             []
 
     - name: 'bags' # Set to true to automatically save all rostopics in rosbags
-      launch_on_startup: true
+      launch_on_startup: false
       delay_before_start: 2.0
       cmd: 'roslaunch farol_bringup bags.launch'
       args:
@@ -98,6 +98,7 @@ processes:
             - waypoint:= true
             - path_following:= true
             - vehicle_stabilizer:= false
+            - bottom_following:= true
       dependencies:
             []
     
@@ -107,14 +108,5 @@ processes:
       cmd: 'roslaunch farol_bringup planning.launch'
       args:
             - dsor_paths:= true
-      dependencies:
-            []
-
-    - name: 'bottom_following' 
-      launch_on_startup: true
-      delay_before_start: 13.0
-      cmd: 'roslaunch bottom_following bottom_following.launch'
-      args:
-            []
       dependencies:
             []
