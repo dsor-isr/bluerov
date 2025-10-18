@@ -10,22 +10,22 @@
 
     <!-- THRUSTER 1 - Horizontal-front starboard -->
     <xacro:thruster_macro robot_namespace="${namespace}" thruster_id="0">
-        <origin xyz="0.1355 -0.1 -0.0725" rpy="0 0 0.7853981634"/>
+        <origin xyz="0.14 -0.1 -0.0725" rpy="0 0 0.7853981634"/>
     </xacro:thruster_macro>
 
     <!-- THRUSTER 2 - Horizontal-front portside -->
     <xacro:thruster_macro robot_namespace="${namespace}" thruster_id="1">
-        <origin xyz="0.1355 0.1 -0.0725" rpy="0 0 -0.7853981634"/>
+        <origin xyz="0.14 0.1 -0.0725" rpy="0 0 -0.7853981634"/>
     </xacro:thruster_macro>
 
     <!-- THRUSTER 3 - Horizontal-back starboard -->
     <xacro:thruster_macro robot_namespace="${namespace}" thruster_id="2">
-        <origin xyz="-0.1475 -0.1 -0.0725" rpy="0 0 2.3561944902"/>
+        <origin xyz="-0.14 -0.1 -0.0725" rpy="0 0 2.3561944902"/>
     </xacro:thruster_macro>
 
     <!-- THRUSTER 4 - Horizontal-back portside -->
     <xacro:thruster_macro robot_namespace="${namespace}" thruster_id="3">
-        <origin xyz="-0.1475 0.1 -0.0725" rpy="0 0 -2.3561944902"/>
+        <origin xyz="-0.14 0.1 -0.0725" rpy="0 0 -2.3561944902"/>
     </xacro:thruster_macro>
 
     <!-- THRUSTER 5 - Vertical-front starboard -->

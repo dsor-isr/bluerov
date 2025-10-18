@@ -8,3 +8,7 @@ cooperative/cpf_wifi_client:
     broadcast_port: 2808
 
 
+controls/path_following:
+    topics:
+        publishers:
+            surge: "/#vehicle#/ref/surge_"
